@@ -10,4 +10,8 @@ export class SerieRepository {
         this.serieModel = serieModel;
     }
 
+    public async create(serie: Serie) {
+        this.serieModel.create(serie);
+    }
+
 }

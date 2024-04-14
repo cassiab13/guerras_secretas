@@ -1,5 +1,5 @@
 
 export interface CollectionURI {
-    available: string,
+    available: number,
     collectionURI: string
 }

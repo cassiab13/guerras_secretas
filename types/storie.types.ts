@@ -1,4 +1,3 @@
-import { Date, Document } from "mongoose";
 import { Image } from "./image.types";
 import { Serie } from "./serie.types";
 import { Character } from "./character.types";
@@ -6,7 +5,7 @@ import { Creator } from "./creator.types";
 import { Comic } from './comic.types';
 import { Event } from './event.types';
 
-export interface Storie extends Document {
+export interface Storie {
     title: string,
     description: string,
     resourceURI: string,

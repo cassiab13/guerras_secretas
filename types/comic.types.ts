@@ -3,13 +3,13 @@ import { Character } from './character.types';
 import { Creator } from './creator.types';
 import { ComicPrice } from './comic-price.types';
 import { ComicDate } from './comic-date.types';
-import { Date, Document } from "mongoose";
+import { Date } from "mongoose";
 import { Serie } from './serie.types';
 import { Image } from './image.types';
 import { Event } from './event.types';
 import { ComicText } from './comit-text.types';
 
-export interface Comic extends Document {
+export interface Comic {
     digitalId: number,
     title: string,
     issueNumber: number,

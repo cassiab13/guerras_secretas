@@ -1,4 +1,4 @@
-import { Date, Document } from "mongoose";
+import { Document } from "mongoose";
 import { Image } from "./image.types";
 import { Comic } from "./comic.types";
 import { Storie } from "./storie.types";
@@ -7,7 +7,7 @@ import { Creator } from "./creator.types";
 import { SerieSummary } from "./serie-summary.tpes";
 import { Event } from "./event.types";
 
-export interface Serie extends Document {
+export interface Serie {
     title: string,
     description: string,
     resourceURI: string,
@@ -21,6 +21,6 @@ export interface Serie extends Document {
     events: Event[],
     characters: Character[],
     creators: Creator[],
-    next: SerieSummary,
-    previous: SerieSummary
+    next: SerieSummary | null,
+    previous: SerieSummary | null
 }

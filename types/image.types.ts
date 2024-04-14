@@ -1,6 +1,5 @@
-import { Document } from "mongoose";
 
-export interface Image extends Document {
+export interface Image {
     path: string,
     extension: string
 }

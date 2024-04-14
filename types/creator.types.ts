@@ -1,11 +1,11 @@
-import { Date, Document } from "mongoose"
+import { Date } from "mongoose"
 import { Image } from "./image.types"
 import { Serie } from "./serie.types"
 import { Storie } from "./storie.types"
 import { Comic } from "./comic.types"
 import { Event } from "./event.types"
 
-export interface Creator extends Document {
+export interface Creator {
     firstName: string,
     middleName: string,
     lastName: string,

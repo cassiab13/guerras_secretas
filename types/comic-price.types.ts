@@ -1,6 +1,5 @@
-import { Document } from "mongoose";
 
-export interface ComicPrice extends Document {
+export interface ComicPrice {
     type: string,
     price: number
 }

@@ -1,0 +1,5 @@
+Salvar criadores 
+Salvar personagens
+Salvar revistas
+
+Verificar uma forma para não duplicar os dados

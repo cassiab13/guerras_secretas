@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
-import { Serie } from '../types/serie.types'
+import { Storie } from '../types/storie.types'
 
-const serieSchema = new Schema({
+const storieSchema = new Schema({
     title: { type: String },
     description: { type: String },
     resourceURI: { type: String },
@@ -17,4 +17,4 @@ const serieSchema = new Schema({
     timestamps: true
 })
 
-export default model<Serie>('Serie', serieSchema)
+export default model<Storie>('Storie', storieSchema)

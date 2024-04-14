@@ -1,6 +1,6 @@
-import { Date, Document } from "mongoose";
+import { Date } from "mongoose";
 
-export interface ComicDate extends Document {
+export interface ComicDate {
     type: string,
     date: Date
 }

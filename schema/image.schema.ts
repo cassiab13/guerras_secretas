@@ -8,4 +8,4 @@ const imageSchema = new Schema({
     timestamps: true
 })
 
-export default model<Image>('User', imageSchema)
+export default model<Image>('Image', imageSchema)
