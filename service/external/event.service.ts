@@ -4,11 +4,11 @@ import { UrlExternalUtils } from '../../utils/external/url.utils';
 export class ExternalService {
 
     public async save(id: string): Promise<void> {
+      const saveEvent: SaveEventHandler = new SaveEventHandler();
+      // saveEvent.setNext()
+      const url = UrlExternalUtils.generateFind("events", id);
 
-        const saveEvent: SaveEventHandler = new SaveEventHandler();
-        const url = UrlExternalUtils.generateFind('events', id);
-        
-        saveEvent.save(url);
+      saveEvent.save(url);
     }
 
 }
