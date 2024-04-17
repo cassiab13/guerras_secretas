@@ -4,7 +4,7 @@ import { SerieRepository } from 'repository/serie.repository';
 export class SerieManager {
 
     private static instance: SerieManager | null = null;
-    private static uriByObjectId: Map<string, Serie> = new Map();
+    private static serieById: Map<number, Serie> = new Map();
     private static readonly repository: SerieRepository = new SerieRepository();
     
     public static getInstance(): SerieManager {
@@ -18,8 +18,8 @@ export class SerieManager {
 
     public static async findCharacter(serie: Serie): Promise<Serie> {
         
-        if (SerieManager.uriByObjectId.has(serie.resourceURI)) {
-            return SerieManager.uriByObjectId.get(serie.resourceURI)!;
+        if (SerieManager.serieById.has(serie.id)) {
+            return SerieManager.serieById.get(serie.id)!;
         }
 
         return this.saveSerie(serie);
@@ -28,7 +28,7 @@ export class SerieManager {
     private static async saveSerie(serie: Serie): Promise<Serie> {
         
         const newSerie: Serie = await SerieManager.repository.create(serie);
-        SerieManager.uriByObjectId.set(newSerie.resourceURI, newSerie);
+        SerieManager.serieById.set(newSerie.id, newSerie);
         
         return newSerie; 
     }
@@ -37,7 +37,7 @@ export class SerieManager {
 
         const series: Serie[] = await SerieManager.repository.findAll();
         series.map(serie => {
-            SerieManager.uriByObjectId.set(serie.resourceURI, serie);
+            SerieManager.serieById.set(serie.id, serie);
         });
     }
 

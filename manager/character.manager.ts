@@ -4,7 +4,7 @@ import { CharacterRepository } from 'repository/character.repository';
 export class CharacterManager {
 
     private static instance: CharacterManager | null = null;
-    private static uriByObjectId: Map<string, Character> = new Map();
+    private static characterById: Map<number, Character> = new Map();
     private static readonly repository: CharacterRepository = new CharacterRepository();
     
     public static getInstance(): CharacterManager {
@@ -18,8 +18,8 @@ export class CharacterManager {
 
     public static async findCharacter(character: Character): Promise<Character> {
         
-        if (CharacterManager.uriByObjectId.has(character.resourceURI)) {
-            return CharacterManager.uriByObjectId.get(character.resourceURI)!;
+        if (CharacterManager.characterById.has(character.id)) {
+            return CharacterManager.characterById.get(character.id)!;
         }
 
         return this.saveCharacter(character);
@@ -28,7 +28,7 @@ export class CharacterManager {
     private static async saveCharacter(character: Character): Promise<Character> {
         
         const newCharacter: Character = await CharacterManager.repository.create(character);
-        CharacterManager.uriByObjectId.set(newCharacter.resourceURI, newCharacter);
+        CharacterManager.characterById.set(newCharacter.id, newCharacter);
         
         return newCharacter; 
     }
@@ -37,7 +37,7 @@ export class CharacterManager {
 
         const characters: Character[] = await CharacterManager.repository.findAll();
         characters.map(character => {
-            CharacterManager.uriByObjectId.set(character.resourceURI, character);
+            CharacterManager.characterById.set(character.id, character);
         });
     }
 

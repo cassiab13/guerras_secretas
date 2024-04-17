@@ -5,7 +5,7 @@ import { Storie } from "./storie.types";
 import { ObjectId } from "mongoose";
 
 export interface Character {
-  _id: ObjectId;
+  _id: ObjectId | null;
   id: number;
   name: string;
   description: string;

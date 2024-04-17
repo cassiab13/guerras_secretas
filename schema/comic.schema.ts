@@ -1,8 +1,7 @@
 import { Schema, model } from 'mongoose'
 import { Comic } from '../types/comic.types'
 
-const comicSchema = new Schema(
-  {
+const comicSchema = new Schema({
     id: { type: Number },
     digitalId: { type: Number },
     title: { type: String },

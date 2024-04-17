@@ -4,7 +4,7 @@ import { StorieRepository } from 'repository/storie.repository';
 export class StorieManager {
 
     private static instance: StorieManager | null = null;
-    private static uriByObjectId: Map<string, Storie> = new Map();
+    private static storieById: Map<number, Storie> = new Map();
     private static readonly repository: StorieRepository = new StorieRepository();
     
     public static getInstance(): StorieManager {
@@ -18,8 +18,8 @@ export class StorieManager {
 
     public static async findCharacter(storie: Storie): Promise<Storie> {
         
-        if (StorieManager.uriByObjectId.has(storie.resourceURI)) {
-            return StorieManager.uriByObjectId.get(storie.resourceURI)!;
+        if (StorieManager.storieById.has(storie.id)) {
+            return StorieManager.storieById.get(storie.id)!;
         }
 
         return this.saveStorie(storie);
@@ -28,7 +28,7 @@ export class StorieManager {
     private static async saveStorie(storie: Storie): Promise<Storie> {
         
         const newStorie: Storie = await StorieManager.repository.create(storie);
-        StorieManager.uriByObjectId.set(newStorie.resourceURI, newStorie);
+        StorieManager.storieById.set(newStorie.id, newStorie);
         
         return newStorie; 
     }
@@ -37,7 +37,7 @@ export class StorieManager {
 
         const stories: Storie[] = await StorieManager.repository.findAll();
         stories.map(storie => {
-            StorieManager.uriByObjectId.set(storie.resourceURI, storie);
+            StorieManager.storieById.set(storie.id, storie);
         });
     }
 

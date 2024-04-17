@@ -4,12 +4,15 @@ import { Creator } from "types/creator.types";
 import { ImageAdapter } from "./image.adapter";
 
 export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
+
   private imageAdapter: ImageAdapter = new ImageAdapter();
 
   public async toInternal(external: CreatorExternal): Promise<Creator> {
+  
     const image = await this.imageAdapter.toInternal(external.thumbnail);
 
     return {
+      _id: null,
       id: external.id,
       firstName: external.firstName,
       middleName: external.middleName,

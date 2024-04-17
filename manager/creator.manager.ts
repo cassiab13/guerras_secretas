@@ -4,7 +4,7 @@ import { CreatorRepository } from 'repository/creator.repository';
 export class CreatorManager {
 
     private static instance: CreatorManager | null = null;
-    private static uriByObjectId: Map<string, Creator> = new Map();
+    private static creatorById: Map<number, Creator> = new Map();
     private static readonly repository: CreatorRepository = new CreatorRepository();
     
     public static getInstance(): CreatorManager {
@@ -18,8 +18,8 @@ export class CreatorManager {
 
     public static async findCreator(creator: Creator): Promise<Creator> {
         
-        if (CreatorManager.uriByObjectId.has(creator.resourceURI)) {
-            return CreatorManager.uriByObjectId.get(creator.resourceURI)!;
+        if (CreatorManager.creatorById.has(creator.id)) {
+            return CreatorManager.creatorById.get(creator.id)!;
         }
 
         return this.saveCreator(creator); 
@@ -28,7 +28,7 @@ export class CreatorManager {
     private static async saveCreator(creator: Creator): Promise<Creator> {
         
         const newCreator: Creator = await CreatorManager.repository.create(creator);
-        CreatorManager.uriByObjectId.set(creator.resourceURI, newCreator);
+        CreatorManager.creatorById.set(creator.id, newCreator);
         
         return newCreator;
     }
@@ -37,7 +37,7 @@ export class CreatorManager {
 
         const creators: Creator[] = await CreatorManager.repository.findAll();
         creators.map(creator => {
-            CreatorManager.uriByObjectId.set(creator.resourceURI, creator);
+            CreatorManager.creatorById.set(creator.id, creator);
         });
     }
 

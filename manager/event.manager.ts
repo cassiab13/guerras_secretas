@@ -4,7 +4,7 @@ import { EventRepository } from 'repository/event.repository';
 export class EventManager {
 
     private static instance: EventManager | null = null;
-    private static uriByObjectId: Map<string, Event> = new Map();
+    private static eventById: Map<number, Event> = new Map();
     private static readonly repository: EventRepository = new EventRepository();
     
     public static getInstance(): EventManager {
@@ -16,10 +16,10 @@ export class EventManager {
         return EventManager.instance;
     }
 
-    public static async findCharacter(event: Event): Promise<Event> {
+    public static async findEvent(event: Event): Promise<Event> {
         
-        if (EventManager.uriByObjectId.has(event.resourceURI)) {
-            return EventManager.uriByObjectId.get(event.resourceURI)!;
+        if (EventManager.eventById.has(event.id)) {
+            return EventManager.eventById.get(event.id)!;
         }
 
         return this.saveEvent(event);
@@ -28,7 +28,7 @@ export class EventManager {
     private static async saveEvent(event: Event): Promise<Event> {
         
         const newEvent: Event = await EventManager.repository.create(event);
-        EventManager.uriByObjectId.set(newEvent.resourceURI, newEvent);
+        EventManager.eventById.set(newEvent.id, newEvent);
         
         return newEvent; 
     }
@@ -37,7 +37,7 @@ export class EventManager {
 
         const events: Event[] = await EventManager.repository.findAll();
         events.map(event => {
-            EventManager.uriByObjectId.set(event.resourceURI, event);
+            EventManager.eventById.set(event.id, event);
         });
     }
 

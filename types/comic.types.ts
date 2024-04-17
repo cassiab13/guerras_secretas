@@ -7,8 +7,10 @@ import { Serie } from "./serie.types";
 import { Image } from "./image.types";
 import { Event } from "./event.types";
 import { ComicText } from "./comit-text.types";
+import { ObjectId } from 'mongoose';
 
 export interface Comic {
+  _id: ObjectId | null;
   id: number;
   digitalId: number;
   title: string;

@@ -3,6 +3,7 @@ import { ImageExternal } from "./image-external.dto";
 import { SerieSummaryExternal } from "./serie-summary-external.dto";
 
 export interface EventExternal {
+    id: number,
     title: string,
     description: string,
     resourceURI: string,

@@ -4,12 +4,15 @@ import { Adapter } from "./adapter";
 import { Comic } from "types/comic.types";
 
 export class ComicAdapter implements Adapter<ComicExternal, Comic> {
+
   private imageAdapter: ImageAdapter = new ImageAdapter();
 
   public async toInternal(external: ComicExternal): Promise<Comic> {
+  
     const image = await this.imageAdapter.toInternal(external.thumbnail);
 
     return {
+      _id: null,
       id: external.id,
       digitalId: external.digitalId,
       title: external.title,

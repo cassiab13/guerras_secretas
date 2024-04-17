@@ -17,7 +17,7 @@ export class RequestExternalUtils {
         const requests: string[] = [];
         const quantityRequest: number = Math.ceil(collection.available / this.LIMIT);
         
-        for (let i = 0; i++; i < quantityRequest) {
+        for (let i = 0; i < quantityRequest; i++) {
             const request: string = this.generateUrl(collection.collectionURI, i);
             requests.push(request)
         }

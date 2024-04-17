@@ -5,8 +5,10 @@ import { Character } from "./character.types";
 import { Creator } from "./creator.types";
 import { SerieSummary } from "./serie-summary.types";
 import { Event } from "./event.types";
+import { ObjectId } from "mongoose";
 
 export interface Serie {
+  _id: ObjectId | null;
   id: number;
   title: string;
   description: string;

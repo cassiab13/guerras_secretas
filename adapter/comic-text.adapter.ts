@@ -3,8 +3,11 @@ import { ComicText } from "types/comit-text.types";
 import { Adapter } from "./adapter";
 
 export class ComicTextAdapter implements Adapter<ComicTextExternal, ComicText> {
+
   public async toInternal(external: ComicTextExternal): Promise<ComicText> {
+
     return {
+      _id: null,
       type: external.type,
       language: external.language,
       text: external.text,

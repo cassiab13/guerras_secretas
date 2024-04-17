@@ -7,6 +7,7 @@ export class ImageAdapter implements Adapter<ImageExternal, Image> {
     public toInternal(external: ImageExternal): Promise<Image> {
         
         return Promise.resolve({
+            _id: null,
             path: external.path,
             extension: external.extension
         });

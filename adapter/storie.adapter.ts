@@ -4,11 +4,15 @@ import { Adapter } from "./adapter";
 import { Storie } from "types/storie.types";
 
 export class StorieAdapter implements Adapter<StorieExternal, Storie> {
-  private ImageAdapter: ImageAdapter = new ImageAdapter();
+
+  private imageAdapter: ImageAdapter = new ImageAdapter();
 
   public async toInternal(external: StorieExternal): Promise<Storie> {
-    const image = await this.ImageAdapter.toInternal(external.thumbnail);
+  
+    const image = await this.imageAdapter.toInternal(external.thumbnail);
+    
     return {
+      _id: null,
       id: external.id,
       title: external.title,
       description: external.description,
