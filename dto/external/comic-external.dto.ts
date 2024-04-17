@@ -6,28 +6,29 @@ import { ImageExternal } from "./image-external.dto";
 import { CollectionURI } from "./collection-uri.dto";
 
 export interface ComicExternal {
-    digitalId: number,
-    title: string,
-    issueNumber: number,
-    variantDescription:	string,
-    description: string,
-    modified: Date,
-    isbn: string,
-    upc: string,    
-    diamondCode: string,
-    ean: string,
-    issn: string,
-    format:	string,
-    pageCount: number,
-    resourceURI: string,
-    textObjects: ComicText[],
-    series:	SerieSummaryExternal,
-    dates: ComicDateExternal[],
-    prices: ComicPrice[],
-    thumbnail: ImageExternal,
-    images: ImageExternal[],
-    creators: CollectionURI,
-    characters: CollectionURI,
-    stories: CollectionURI,
-    events: CollectionURI,
+  id: number;
+  digitalId: number;
+  title: string;
+  issueNumber: number;
+  variantDescription: string;
+  description: string;
+  modified: Date;
+  isbn: string;
+  upc: string;
+  diamondCode: string;
+  ean: string;
+  issn: string;
+  format: string;
+  pageCount: number;
+  resourceURI: string;
+  textObjects: ComicText[];
+  series: SerieSummaryExternal;
+  dates: ComicDateExternal[];
+  prices: ComicPrice[];
+  thumbnail: ImageExternal;
+  images: ImageExternal[];
+  creators: CollectionURI;
+  characters: CollectionURI;
+  stories: CollectionURI;
+  events: CollectionURI;
 }

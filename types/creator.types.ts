@@ -5,6 +5,7 @@ import { Comic } from "./comic.types";
 import { Event } from "./event.types";
 
 export interface Creator {
+  id: number;
   firstName: string;
   middleName: string;
   lastName: string;

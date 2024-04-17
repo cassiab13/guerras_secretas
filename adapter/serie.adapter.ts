@@ -12,21 +12,22 @@ export class SerieAdapter implements Adapter<SerieExternal, Serie> {
         const image = await this.imageRepository.create(external.thumbnail);
 
         return {
-            title: external.title,
-            description: external.description,
-            resourceURI: external.resourceURI,
-            startYear: external.startYear,
-            endYear: external.endYear,
-            rating: external.rating,
-            modified: new Date(external.modified),
-            thumbnail: image,
-            comics: [],
-            stories: [],
-            events: [],
-            characters: [],
-            creators: [],
-            next: null,
-            previous: null,
+          id: external.id,
+          title: external.title,
+          description: external.description,
+          resourceURI: external.resourceURI,
+          startYear: external.startYear,
+          endYear: external.endYear,
+          rating: external.rating,
+          modified: new Date(external.modified),
+          thumbnail: image,
+          comics: [],
+          stories: [],
+          events: [],
+          characters: [],
+          creators: [],
+          next: null,
+          previous: null,
         };
     }
 

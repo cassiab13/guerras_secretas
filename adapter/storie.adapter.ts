@@ -9,6 +9,7 @@ export class StorieAdapter implements Adapter<StorieExternal, Storie> {
   public async toInternal(external: StorieExternal): Promise<Storie> {
     const image = await this.ImageAdapter.toInternal(external.thumbnail);
     return {
+      id: external.id,
       title: external.title,
       description: external.description,
       resourceURI: external.resourceURI,

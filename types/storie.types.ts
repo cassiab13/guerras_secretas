@@ -6,15 +6,16 @@ import { Comic } from './comic.types';
 import { Event } from './event.types';
 
 export interface Storie {
-    title: string,
-    description: string,
-    resourceURI: string,
-    type: string,
-    modified: Date,
-    thumbnail: Image,
-    comics: Comic[],
-    series: Serie[],
-    events: Event[],
-    characters: Character[],
-    creators: Creator[]
+  id: number;
+  title: string;
+  description: string;
+  resourceURI: string;
+  type: string;
+  modified: Date;
+  thumbnail: Image;
+  comics: Comic[];
+  series: Serie[];
+  events: Event[];
+  characters: Character[];
+  creators: Creator[];
 }

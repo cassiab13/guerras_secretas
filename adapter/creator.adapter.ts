@@ -10,6 +10,7 @@ export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
     const image = await this.imageAdapter.toInternal(external.thumbnail);
 
     return {
+      id: external.id,
       firstName: external.firstName,
       middleName: external.middleName,
       lastName: external.lastName,

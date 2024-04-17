@@ -7,6 +7,7 @@ import { SerieSummary } from "./serie-summary.types";
 import { Event } from "./event.types";
 
 export interface Serie {
+  id: number;
   title: string;
   description: string;
   resourceURI: string;

@@ -9,6 +9,7 @@ import { Event } from "./event.types";
 import { ComicText } from "./comit-text.types";
 
 export interface Comic {
+  id: number;
   digitalId: number;
   title: string;
   issueNumber: number;

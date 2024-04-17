@@ -3,6 +3,7 @@ import { Comic } from '../types/comic.types'
 
 const comicSchema = new Schema(
   {
+    id: { type: Number },
     digitalId: { type: Number },
     title: { type: String },
     issueNumber: { type: Number },
