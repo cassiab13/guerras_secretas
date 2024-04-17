@@ -10,8 +10,12 @@ export class EventRepository {
         this.eventModel = eventModel;
     }
 
-    public async create(event: Event) {
+    public async create(event: Event): Promise<Event> {
         return this.eventModel.create(event);
+    }
+
+    public async findAll(): Promise<Event[]> {
+        return this.eventModel.find();
     }
 
 }
