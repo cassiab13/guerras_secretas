@@ -9,7 +9,11 @@ export class CharacterRepository {
     this.characterModel = characterModel;
   }
 
-  public async create(character: Character) {
-    this.characterModel.create(character);
+  public async create(character: Character): Promise<Character> {
+    return this.characterModel.create(character);
+  }
+
+  public async findAll(): Promise<Character[]> {
+    return characterModel.find();
   }
 }
