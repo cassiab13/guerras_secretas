@@ -3,3 +3,14 @@ Salvar personagens
 Salvar revistas
 
 Verificar uma forma para não duplicar os dados
+
+Revistas:
+Retornar as revistas ordenadas por preço
+Retornar as revistas de um criador específico
+
+Personagens:
+Retornar as revistas que ele apareceu
+
+Criadores:
+Retornar criadores por papel
+

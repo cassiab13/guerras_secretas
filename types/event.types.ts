@@ -4,7 +4,7 @@ import { Storie } from "./storie.types"
 import { Serie } from "./serie.types"
 import { Character } from "./character.types"
 import { Creator } from "./creator.types"
-import { SerieSummary } from "./serie-summary.tpes"
+import { SerieSummary } from "./serie-summary.types";
 
 export interface Event {
     title: string,
