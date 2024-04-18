@@ -23,10 +23,10 @@ export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
       modified: new Date(external.modified),
       resourceURI: external.resourceURI,
       thumbnail: image,
-      series: [],
-      stories: [],
-      comics: [],
-      events: [],
+      series: external.series,
+      stories: external.stories,
+      comics: external.comics,
+      events: external.events,
     };
   }
 }

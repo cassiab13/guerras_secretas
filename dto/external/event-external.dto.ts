@@ -1,6 +1,11 @@
+import { Comic } from "types/comic.types";
 import { CollectionURI } from "./collection-uri.dto";
 import { ImageExternal } from "./image-external.dto";
 import { SerieSummaryExternal } from "./serie-summary-external.dto";
+import { Storie } from "types/storie.types";
+import { Serie } from "types/serie.types";
+import { Character } from "types/character.types";
+import { Creator } from "types/creator.types";
 
 export interface EventExternal {
     id: number,
@@ -11,11 +16,11 @@ export interface EventExternal {
     start: Date,
     end: Date,
     thumbnail: ImageExternal,
-    comics: CollectionURI,
-    stories: CollectionURI,
-    series: CollectionURI,
-    characters: CollectionURI,
-    creators: CollectionURI,
+    comics: CollectionURI | Comic[],
+    stories: CollectionURI | Storie[],
+    series: CollectionURI | Serie[],
+    characters: CollectionURI | Character[],
+    creators: CollectionURI | Creator[],
     next: SerieSummaryExternal,
     previous: SerieSummaryExternal
 }

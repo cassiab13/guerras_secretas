@@ -1,5 +1,5 @@
-import { Serie } from 'types/serie.types';
-import { SerieRepository } from 'repository/serie.repository';
+import { Serie } from '../types/serie.types';
+import { SerieRepository } from '../repository/serie.repository';
 
 export class SerieManager {
 

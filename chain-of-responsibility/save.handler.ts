@@ -1,8 +1,9 @@
+import { Serie } from "t../../types/serie.types";
 
 export interface SaveHandler {
 
     setNext(handler: SaveHandler): SaveHandler;
 
-    save(url: string): void;
+    save(serie: Serie): Promise<Serie>;
 
 }

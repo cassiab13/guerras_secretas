@@ -6,6 +6,7 @@ import { Creator } from "./creator.types";
 import { SerieSummary } from "./serie-summary.types";
 import { Event } from "./event.types";
 import { ObjectId } from "mongoose";
+import { CollectionURI } from "dto/external/collection-uri.dto";
 
 export interface Serie {
   _id: ObjectId | null;
@@ -18,11 +19,11 @@ export interface Serie {
   rating: string;
   modified: Date;
   thumbnail: Image;
-  comics: Comic[];
-  stories: Storie[];
-  events: Event[];
-  characters: Character[];
-  creators: Creator[];
-  next: SerieSummary | null;
-  previous: SerieSummary | null;
+  comics: CollectionURI | Comic[];
+  stories: CollectionURI | Storie[];
+  events: CollectionURI | Event[];
+  characters: CollectionURI | Character[];
+  creators: CollectionURI | Creator[];
+  next: any | null;
+  previous: any | null;
 }

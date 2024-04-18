@@ -1,11 +1,20 @@
+import { ResponseAPI } from 'dto/external/response-api.dto';
 import { CollectionURI } from './../../dto/external/collection-uri.dto';
 import { UrlExternalUtils } from './url.utils';
+import { Serie } from 'types/serie.types';
 
-export class RequestExternalUtils {
+export class Request {
 
     private static readonly LIMIT: number = 100;
 
-    public static async find(collection: CollectionURI): Promise<any> {
+    public static async findByUrl(url: string): Promise<ResponseAPI<any>> {
+        
+        const response = await fetch(url);
+        return response.json();
+    }
+
+
+    public static async findByCollection(collection: CollectionURI): Promise<any> {
         
         const requests = this.generateRequest(collection);
 

@@ -33,11 +33,11 @@ export class ComicAdapter implements Adapter<ComicExternal, Comic> {
       dates: [],
       prices: [],
       thumbnail: image,
-      images: [],
-      creators: [],
-      characters: [],
-      stories: [],
-      events: [],
+      images: external.images,
+      creators: external.creators,
+      characters: external.characters,
+      stories: external.stories,
+      events: external.events,
     };
   }
 }

@@ -22,11 +22,11 @@ export class EventAdapter implements Adapter<EventExternal, Event> {
             start: external.start,
             end: external.end,
             thumbnail: image,
-            comics: [],
-            stories: [], 
-            series: [], 
-            characters: [],
-            creators: [], 
+            comics: external.comics,
+            stories: external.stories, 
+            series: external.series, 
+            characters: external.characters,
+            creators: external.creators, 
             next: null,
             previous: null
         };

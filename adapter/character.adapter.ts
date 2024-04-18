@@ -19,10 +19,10 @@ export class CharacterAdapter implements Adapter<CharacterExternal, Character> {
       modified: new Date(external.modified),
       resourceURI: external.resourceURI,
       thumbnail: image,
-      comics: [],
-      stories: [],
-      events: [],
-      series: [],
+      comics: external.comics,
+      stories: external.stories,
+      events: external.events,
+      series: external.series,
     };
   }
 }

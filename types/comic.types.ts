@@ -8,6 +8,7 @@ import { Image } from "./image.types";
 import { Event } from "./event.types";
 import { ComicText } from "./comit-text.types";
 import { ObjectId } from 'mongoose';
+import { CollectionURI } from 'dto/external/collection-uri.dto';
 
 export interface Comic {
   _id: ObjectId | null;
@@ -32,8 +33,8 @@ export interface Comic {
   prices: ComicPrice[];
   thumbnail: Image;
   images: Image[];
-  creators: Creator[];
-  characters: Character[];
-  stories: Storie[];
-  events: Event[];
+  creators: CollectionURI | Creator[];
+  characters: CollectionURI | Character[];
+  stories: CollectionURI | Storie[];
+  events: CollectionURI | Event[];
 }

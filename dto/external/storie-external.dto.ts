@@ -1,5 +1,10 @@
+import { Comic } from "types/comic.types";
 import { CollectionURI } from "./collection-uri.dto";
 import { ImageExternal } from "./image-external.dto";
+import { Serie } from "types/serie.types";
+import { Event } from "types/event.types";
+import { Character } from "types/character.types";
+import { Creator } from "types/creator.types";
 
 export interface StorieExternal {
   id: number;
@@ -9,9 +14,9 @@ export interface StorieExternal {
   type: string;
   modified: Date;
   thumbnail: ImageExternal;
-  comics: CollectionURI;
-  series: CollectionURI;
-  events: CollectionURI;
-  characters: CollectionURI;
-  creators: CollectionURI;
+  comics: CollectionURI | Comic[];
+  series: CollectionURI | Serie[];
+  events: CollectionURI | Event[];
+  characters: CollectionURI | Character[];
+  creators: CollectionURI | Creator[];
 }

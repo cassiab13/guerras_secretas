@@ -14,3 +14,7 @@ Retornar as revistas que ele apareceu
 Criadores:
 Retornar criadores por papel
 
+{
+    "resourceURI": "http://gateway.marvel.com/v1/public/series/2063",
+    "name": "Secret Wars (1984 - 1985)"
+},

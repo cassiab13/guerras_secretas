@@ -20,11 +20,11 @@ export class StorieAdapter implements Adapter<StorieExternal, Storie> {
       type: external.type,
       modified: new Date(external.modified),
       thumbnail: image,
-      comics: [],
-      series: [],
-      events: [],
-      characters: [],
-      creators: [],
+      comics: external.comics,
+      series: external.series,
+      events: external.events,
+      characters: external.characters,
+      creators: external.creators,
     };
   }
 }

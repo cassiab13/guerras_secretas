@@ -1,8 +1,8 @@
+import { Comic } from 'types/comic.types';
 import { ImageAdapter } from './image.adapter';
 import { Serie } from './../types/serie.types';
 import { SerieExternal } from "../dto/external/serie-external.dto";
 import { Adapter } from "./adapter";
-import { ImageRepository } from '../repository/image.repository';
 
 export class SerieAdapter implements Adapter<SerieExternal, Serie> {
 
@@ -23,11 +23,11 @@ export class SerieAdapter implements Adapter<SerieExternal, Serie> {
           rating: external.rating,
           modified: new Date(external.modified),
           thumbnail: image,
-          comics: [],
-          stories: [],
-          events: [],
-          characters: [],
-          creators: [],
+          comics: external.comics,
+          stories: external.stories,
+          events: external.events,
+          characters: external.characters,
+          creators: external.creators,
           next: null,
           previous: null,
         };

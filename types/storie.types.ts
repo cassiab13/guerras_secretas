@@ -5,6 +5,7 @@ import { Creator } from "./creator.types";
 import { Comic } from './comic.types';
 import { Event } from './event.types';
 import { ObjectId } from "mongoose";
+import { CollectionURI } from "dto/external/collection-uri.dto";
 
 export interface Storie {
   _id: ObjectId | null;
@@ -15,9 +16,9 @@ export interface Storie {
   type: string;
   modified: Date;
   thumbnail: Image;
-  comics: Comic[];
-  series: Serie[];
-  events: Event[];
-  characters: Character[];
-  creators: Creator[];
+  comics: CollectionURI | Comic[];
+  series: CollectionURI | Serie[];
+  events: CollectionURI | Event[];
+  characters: CollectionURI | Character[];
+  creators: CollectionURI | Creator[];
 }

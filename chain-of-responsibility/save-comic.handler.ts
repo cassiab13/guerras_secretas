@@ -1,7 +1,8 @@
-import { SaveHandler } from "./save.handler";
 import { Serie } from "types/serie.types";
+import { SaveHandler } from "./save.handler";
+import { CollectionURI } from "dto/external/collection-uri.dto";
 
-export class SaveCreatorHandler implements SaveHandler {
+export class SaveComicHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null
 

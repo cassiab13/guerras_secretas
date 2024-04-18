@@ -4,6 +4,10 @@ import { ComicDateExternal } from "./comic-date-external.dto";
 import { ComicPrice } from "../../types/comic-price.types";
 import { ImageExternal } from "./image-external.dto";
 import { CollectionURI } from "./collection-uri.dto";
+import { Creator } from "types/creator.types";
+import { Character } from "types/character.types";
+import { Storie } from "types/storie.types";
+import { Event } from "types/event.types";
 
 export interface ComicExternal {
   id: number;
@@ -27,8 +31,8 @@ export interface ComicExternal {
   prices: ComicPrice[];
   thumbnail: ImageExternal;
   images: ImageExternal[];
-  creators: CollectionURI;
-  characters: CollectionURI;
-  stories: CollectionURI;
-  events: CollectionURI;
+  creators: CollectionURI | Creator[];
+  characters: CollectionURI | Character[];
+  stories: CollectionURI | Storie[];
+  events: CollectionURI | Event[];
 }

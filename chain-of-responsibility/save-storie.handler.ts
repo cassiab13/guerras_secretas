@@ -1,7 +1,7 @@
+import { Serie } from "../types/serie.types";
 import { SaveHandler } from "./save.handler";
-import { Serie } from "types/serie.types";
 
-export class SaveCreatorHandler implements SaveHandler {
+export class SaveStorieHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null
 
