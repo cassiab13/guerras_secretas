@@ -11,7 +11,6 @@ import { ObjectId } from 'mongoose';
 import { CollectionURI } from 'dto/external/collection-uri.dto';
 
 export interface Comic {
-  _id: ObjectId | null;
   id: number;
   digitalId: number;
   title: string;

@@ -7,7 +7,6 @@ export class SerieSummaryAdapter implements Adapter<SerieSummaryExternal, SerieS
   public async toInternal(external: SerieSummaryExternal): Promise<SerieSummary> {
 
     return {
-      _id: null,
       serie: null,
       name: external.name,
     };

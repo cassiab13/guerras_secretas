@@ -16,7 +16,7 @@ export class SerieManager {
         return SerieManager.instance;
     }
 
-    public static async findCharacter(serie: Serie): Promise<Serie> {
+    public async findSerie(serie: Serie): Promise<Serie> {
         
         if (SerieManager.serieById.has(serie.id)) {
             return SerieManager.serieById.get(serie.id)!;
@@ -25,7 +25,7 @@ export class SerieManager {
         return this.saveSerie(serie);
     }
     
-    private static async saveSerie(serie: Serie): Promise<Serie> {
+    private async saveSerie(serie: Serie): Promise<Serie> {
         
         const newSerie: Serie = await SerieManager.repository.create(serie);
         SerieManager.serieById.set(newSerie.id, newSerie);

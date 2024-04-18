@@ -12,7 +12,6 @@ export class ComicAdapter implements Adapter<ComicExternal, Comic> {
     const image = await this.imageAdapter.toInternal(external.thumbnail);
 
     return {
-      _id: null,
       id: external.id,
       digitalId: external.digitalId,
       title: external.title,

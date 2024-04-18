@@ -12,7 +12,6 @@ export class CharacterAdapter implements Adapter<CharacterExternal, Character> {
     const image = await this.imageAdapter.toInternal(external.thumbnail);
 
     return {
-      _id: null,
       id: external.id,
       name: external.name,
       description: external.description,

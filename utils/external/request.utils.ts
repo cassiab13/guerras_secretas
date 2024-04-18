@@ -14,7 +14,7 @@ export class Request {
     }
 
 
-    public static async findByCollection(collection: CollectionURI): Promise<any> {
+    public static async findByCollection(collection: CollectionURI): Promise<ResponseAPI<any>[]> {
         
         const requests = this.generateRequest(collection);
 
@@ -35,8 +35,7 @@ export class Request {
     }
 
     private static generateUrl(uri: string, multiplier: number): string {
-        return `${uri}${UrlExternalUtils.generateCredentials()}
-        &offset=${multiplier * this.LIMIT}&limit=${multiplier * this.LIMIT + this.LIMIT}`
+        return `${uri}${UrlExternalUtils.generateCredentials()}&offset=${multiplier * this.LIMIT}&limit=${multiplier * this.LIMIT + this.LIMIT}`
     }
 
 } 

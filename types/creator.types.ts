@@ -7,7 +7,6 @@ import { ObjectId } from "mongoose";
 import { CollectionURI } from "dto/external/collection-uri.dto";
 
 export interface Creator {
-  _id: ObjectId | null;
   id: number;
   firstName: string;
   middleName: string;

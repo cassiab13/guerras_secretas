@@ -13,7 +13,6 @@ export class SerieAdapter implements Adapter<SerieExternal, Serie> {
         const image = await this.imageAdapter.toInternal(external.thumbnail);
 
         return {
-          _id: null,
           id: external.id,
           title: external.title,
           description: external.description,

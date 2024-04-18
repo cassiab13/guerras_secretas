@@ -12,7 +12,6 @@ export class StorieAdapter implements Adapter<StorieExternal, Storie> {
     const image = await this.imageAdapter.toInternal(external.thumbnail);
     
     return {
-      _id: null,
       id: external.id,
       title: external.title,
       description: external.description,

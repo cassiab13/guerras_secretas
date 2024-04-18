@@ -7,7 +7,6 @@ export class ComicPriceAdapter implements Adapter<ComicPriceExternal, ComicPrice
   public async toInternal(external: ComicPriceExternal): Promise<ComicPrice> {
 
     return {
-      _id: null,
       type: external.type,
       price: external.price,
     };

@@ -7,7 +7,6 @@ import { ObjectId } from "mongoose";
 import { Event } from './event.types';
 
 export interface Character {
-  _id: ObjectId | null;
   id: number;
   name: string;
   description: string;

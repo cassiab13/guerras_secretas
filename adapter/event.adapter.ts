@@ -13,7 +13,6 @@ export class EventAdapter implements Adapter<EventExternal, Event> {
         const image = await this.imageAdapter.toInternal(external.thumbnail);
         
         return {
-            _id: null,
             id: external.id,
             title: external.title,
             description: external.description,

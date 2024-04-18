@@ -9,7 +9,6 @@ import { ObjectId } from "mongoose";
 import { CollectionURI } from "dto/external/collection-uri.dto";
 
 export interface Serie {
-  _id: ObjectId | null;
   id: number;
   title: string;
   description: string;

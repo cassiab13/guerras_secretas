@@ -1,5 +1,5 @@
-import { Creator } from 'types/creator.types';
-import { CreatorRepository } from 'repository/creator.repository';
+import { Creator } from '../types/creator.types';
+import { CreatorRepository } from '../repository/creator.repository';
 
 export class CreatorManager {
 
@@ -16,7 +16,9 @@ export class CreatorManager {
         return CreatorManager.instance;
     }
 
-    public static async findCreator(creator: Creator): Promise<Creator> {
+    public async findCreator(creator: Creator): Promise<Creator> {
+
+        console.log(CreatorManager.creatorById);
         
         if (CreatorManager.creatorById.has(creator.id)) {
             return CreatorManager.creatorById.get(creator.id)!;
@@ -25,7 +27,7 @@ export class CreatorManager {
         return this.saveCreator(creator); 
     }
 
-    private static async saveCreator(creator: Creator): Promise<Creator> {
+    private async saveCreator(creator: Creator): Promise<Creator> {
         
         const newCreator: Creator = await CreatorManager.repository.create(creator);
         CreatorManager.creatorById.set(creator.id, newCreator);
