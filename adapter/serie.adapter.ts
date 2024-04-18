@@ -1,16 +1,15 @@
-import { Comic } from 'types/comic.types';
-import { ImageAdapter } from './image.adapter';
 import { Serie } from './../types/serie.types';
 import { SerieExternal } from "../dto/external/serie-external.dto";
 import { Adapter } from "./adapter";
+import { ImageService } from '../service/external/image.service';
 
 export class SerieAdapter implements Adapter<SerieExternal, Serie> {
 
-    private imageAdapter: ImageAdapter = new ImageAdapter();
+    private imageService: ImageService = new ImageService();
 
     public async toInternal(external: SerieExternal): Promise<Serie> {
         
-        const image = await this.imageAdapter.toInternal(external.thumbnail);
+        const image = await this.imageService.save(external.thumbnail);
 
         return {
           id: external.id,

@@ -1,18 +1,15 @@
 import { CreatorExternal } from "dto/external/creator-external.dto";
 import { Adapter } from "./adapter";
 import { Creator } from "../types/creator.types";
-import { ImageAdapter } from "./image.adapter";
-import { ImageRepository } from "../repository/image.repository";
+import { ImageService } from "../service/external/image.service";
 
 export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
 
-  private imageAdapter: ImageAdapter = new ImageAdapter();
-  private readonly imageRepository: ImageRepository = new ImageRepository();
+  private imageService: ImageService = new ImageService();
 
   public async toInternal(external: CreatorExternal): Promise<Creator> {
   
-    const image = await this.imageAdapter.toInternal(external.thumbnail);
-    const newImage = await this.imageRepository.create(image);
+    const image = await this.imageService.save(external.thumbnail);
 
     return {
       id: external.id,
@@ -24,7 +21,7 @@ export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
       role: external.role,
       modified: new Date(external.modified),
       resourceURI: external.resourceURI,
-      thumbnail: newImage,
+      thumbnail: image,
       series: external.series,
       stories: external.stories,
       comics: external.comics,
@@ -34,8 +31,7 @@ export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
 
   public async toInternalSave(external: CreatorExternal): Promise<Creator> {
   
-    const image = await this.imageAdapter.toInternal(external.thumbnail);
-    const newImage = await this.imageRepository.create(image);
+    const image = await this.imageService.save(external.thumbnail);
 
     return {
       id: external.id,
@@ -47,7 +43,7 @@ export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
       role: external.role,
       modified: new Date(external.modified),
       resourceURI: external.resourceURI,
-      thumbnail: newImage,
+      thumbnail: image,
       series: [],
       stories: [],
       comics: [],

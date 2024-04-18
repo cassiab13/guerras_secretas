@@ -12,9 +12,9 @@ export class ExternalController {
     public async save(request: Request, response: Response) {
 
         const id: string = request.params.id;
-        const seila = await this.service.save(id);
+        this.service.save(id);
 
-        response.status(201).json(seila);
+        response.status(201).json();
 
     }
 

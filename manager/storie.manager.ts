@@ -1,8 +1,8 @@
 import { Storie } from 'types/storie.types';
-import { StorieRepository } from 'repository/storie.repository';
+import { StorieRepository } from '../repository/storie.repository';
 
 export class StorieManager {
-
+    
     private static instance: StorieManager | null = null;
     private static storieById: Map<number, Storie> = new Map();
     private static readonly repository: StorieRepository = new StorieRepository();
@@ -16,7 +16,7 @@ export class StorieManager {
         return StorieManager.instance;
     }
 
-    public static async findCharacter(storie: Storie): Promise<Storie> {
+    public async findStorie(storie: Storie): Promise<Storie> {
         
         if (StorieManager.storieById.has(storie.id)) {
             return StorieManager.storieById.get(storie.id)!;
@@ -25,7 +25,7 @@ export class StorieManager {
         return this.saveStorie(storie);
     }
     
-    private static async saveStorie(storie: Storie): Promise<Storie> {
+    private async saveStorie(storie: Storie): Promise<Storie> {
         
         const newStorie: Storie = await StorieManager.repository.create(storie);
         StorieManager.storieById.set(newStorie.id, newStorie);

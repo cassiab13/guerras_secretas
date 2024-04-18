@@ -17,8 +17,6 @@ export class CreatorManager {
     }
 
     public async findCreator(creator: Creator): Promise<Creator> {
-
-        console.log(CreatorManager.creatorById);
         
         if (CreatorManager.creatorById.has(creator.id)) {
             return CreatorManager.creatorById.get(creator.id)!;

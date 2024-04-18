@@ -1,5 +1,5 @@
 import { Character } from '../types/character.types';
-import { CharacterRepository } from 'repository/character.repository';
+import { CharacterRepository } from '../repository/character.repository';
 
 export class CharacterManager {
 
@@ -16,7 +16,7 @@ export class CharacterManager {
         return CharacterManager.instance;
     }
 
-    public static async findCharacter(character: Character): Promise<Character> {
+    public async findCharacter(character: Character): Promise<Character> {
         
         if (CharacterManager.characterById.has(character.id)) {
             return CharacterManager.characterById.get(character.id)!;
@@ -25,7 +25,7 @@ export class CharacterManager {
         return this.saveCharacter(character);
     }
     
-    private static async saveCharacter(character: Character): Promise<Character> {
+    private async saveCharacter(character: Character): Promise<Character> {
         
         const newCharacter: Character = await CharacterManager.repository.create(character);
         CharacterManager.characterById.set(newCharacter.id, newCharacter);

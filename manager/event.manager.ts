@@ -1,5 +1,5 @@
 import { Event } from './../types/event.types';
-import { EventRepository } from 'repository/event.repository';
+import { EventRepository } from '../repository/event.repository';
 
 export class EventManager {
 
@@ -16,7 +16,7 @@ export class EventManager {
         return EventManager.instance;
     }
 
-    public static async findEvent(event: Event): Promise<Event> {
+    public async findEvent(event: Event): Promise<Event> {
         
         if (EventManager.eventById.has(event.id)) {
             return EventManager.eventById.get(event.id)!;
@@ -25,7 +25,7 @@ export class EventManager {
         return this.saveEvent(event);
     }
     
-    private static async saveEvent(event: Event): Promise<Event> {
+    private async saveEvent(event: Event): Promise<Event> {
         
         const newEvent: Event = await EventManager.repository.create(event);
         EventManager.eventById.set(newEvent.id, newEvent);

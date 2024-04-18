@@ -1,5 +1,5 @@
 import { Comic } from './../types/comic.types';
-import { ComicRepository } from 'repository/comic.repository';
+import { ComicRepository } from '../repository/comic.repository';
 
 export class ComicManager {
 
@@ -16,7 +16,7 @@ export class ComicManager {
         return ComicManager.instance;
     }
 
-    public static async findCharacter(comic: Comic): Promise<Comic> {
+    public async findComic(comic: Comic): Promise<Comic> {
         
         if (ComicManager.comicById.has(comic.id)) {
             return ComicManager.comicById.get(comic.id)!;
@@ -25,7 +25,7 @@ export class ComicManager {
         return this.saveComic(comic);
     }
 
-    private static async saveComic(comic: Comic): Promise<Comic> {
+    private async saveComic(comic: Comic): Promise<Comic> {
 
         const newComic: Comic = await ComicManager.repository.create(comic);
         ComicManager.comicById.set(comic.id, newComic);

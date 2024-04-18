@@ -26,7 +26,8 @@ export class ExternalService {
 
     private async saveSerie(serie: Serie) {
 
-        return this.updateSerie(serie);
+        const newSerie: Serie = await this.updateSerie(serie);
+        this.serieManager.findSerie(newSerie);
 
     }
 
