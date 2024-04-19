@@ -3,7 +3,6 @@ import { Image } from "./image.types";
 import { Serie } from "./serie.types";
 import { Comic } from "./comic.types";
 import { Storie } from "./storie.types";
-import { ObjectId } from "mongoose";
 import { Event } from './event.types';
 
 export interface Character {
