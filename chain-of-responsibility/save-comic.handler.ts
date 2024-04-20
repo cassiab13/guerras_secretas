@@ -13,30 +13,35 @@ export class SaveComicHandler implements SaveHandler {
     private nextHandler: SaveHandler | null = null;
     private comicAdapter: ComicAdapter = new ComicAdapter();
     private comicManager: ComicManager = ComicManager.getInstance();
+    private toUpdate: any;
+    private collectionUri: CollectionURI;
+
+    constructor(toUpdate: any, collectionUri: CollectionURI) {
+        this.toUpdate = toUpdate;
+        this.collectionUri = collectionUri;
+    }
 
     setNext(handler: SaveHandler): SaveHandler {
         this.nextHandler = handler;
         return handler;
     }
 
-    public async save(serie: Serie): Promise<Serie> {
-        
-        const uri: CollectionURI = serie.comics as CollectionURI;
+    public async save(): Promise<any> {
 
-        const response: ResponseAPI<ComicExternal>[] = await Request.findByCollection(uri);
-        await this.filterComics(serie, response);
+        const response: ResponseAPI<ComicExternal>[] = await Request.findByCollection(this.collectionUri);
+        await this.filterComics(this.toUpdate, response);
 
         if (this.nextHandler) {
-            return this.nextHandler.save(serie);
+            return this.nextHandler.save();
         }
 
-        return serie;
+        return this.toUpdate;
 
     }
 
-    private async filterComics(serie: Serie, response: ResponseAPI<ComicExternal>[]): Promise<void> {
+    private async filterComics(type: any, response: ResponseAPI<ComicExternal>[]): Promise<void> {
 
-        serie.comics = [];
+        type.comics = [];
         const allComics: ComicExternal[] = response.map(response => response.data.results).flat();
         const sizeComics: number = allComics.length;
         
@@ -45,7 +50,7 @@ export class SaveComicHandler implements SaveHandler {
             const comic: Comic = await this.comicAdapter.toInternalSave(allComics[i]);
             const newComic: Comic = await this.comicManager.findComic(comic);
 
-            serie.comics.push(newComic);
+            type.comics.push(newComic);
             
         }
     

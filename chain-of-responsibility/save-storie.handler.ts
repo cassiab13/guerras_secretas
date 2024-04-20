@@ -1,6 +1,5 @@
 import { StorieManager } from "../manager/storie.manager";
 import { StorieAdapter } from "../adapter/storie.adapter";
-import { Serie } from "../types/serie.types";
 import { SaveHandler } from "./save.handler";
 import { CollectionURI } from "../dto/external/collection-uri.dto";
 import { ResponseAPI } from "../dto/external/response-api.dto";
@@ -13,30 +12,35 @@ export class SaveStorieHandler implements SaveHandler {
     private nextHandler: SaveHandler | null = null;
     private storieAdapter: StorieAdapter = new StorieAdapter();
     private storieManager: StorieManager = StorieManager.getInstance();
+    private toUpdate: any;
+    private collectionUri: CollectionURI;
+
+    constructor(toUpdate: any, collectionUri: CollectionURI) {
+        this.toUpdate = toUpdate;
+        this.collectionUri = collectionUri;
+    }
 
     setNext(handler: SaveHandler): SaveHandler {
         this.nextHandler = handler;
         return handler;
     }
 
-    public async save(serie: Serie): Promise<Serie> {
-        
-        const uri: CollectionURI = serie.stories as CollectionURI;
+    public async save(): Promise<any> {
 
-        const response: ResponseAPI<StorieExternal>[] = await Request.findByCollection(uri);
-        await this.filterStories(serie, response);
+        const response: ResponseAPI<StorieExternal>[] = await Request.findByCollection(this.collectionUri);
+        await this.filterStories(this.toUpdate, response);
 
         if (this.nextHandler) {
-            return this.nextHandler.save(serie);
+            return this.nextHandler.save();
         }
 
-        return serie;
+        return this.toUpdate;
 
     }
 
-    private async filterStories(serie: Serie, response: ResponseAPI<StorieExternal>[]): Promise<void> {
+    private async filterStories(type: any, response: ResponseAPI<StorieExternal>[]): Promise<void> {
 
-        serie.stories = [];
+        type.stories = [];
         const allStories: StorieExternal[] = response.map(response => response.data.results).flat();
         const sizeStories: number = allStories.length;
         
@@ -45,7 +49,7 @@ export class SaveStorieHandler implements SaveHandler {
             const storie: Storie = await this.storieAdapter.toInternalSave(allStories[i]);
             const newStorie: Storie = await this.storieManager.findStorie(storie);
 
-            serie.stories.push(newStorie);
+            type.stories.push(newStorie);
             
         }
     

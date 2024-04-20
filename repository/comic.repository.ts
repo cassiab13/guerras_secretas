@@ -16,4 +16,10 @@ export class ComicRepository {
   public async findAll(): Promise<Comic[]> {
     return comicModel.find();
   }
+
+  public async updateMany(comics: Comic[]): Promise<void> {
+    for (const comic of comics) {
+        await this.comicModel.updateOne({ id: comic.id }, comic);
+    }
+  }
 }
