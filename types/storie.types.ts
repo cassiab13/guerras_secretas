@@ -4,7 +4,6 @@ import { Character } from "./character.types";
 import { Creator } from "./creator.types";
 import { Comic } from './comic.types';
 import { Event } from './event.types';
-import { ObjectId } from "mongoose";
 import { CollectionURI } from "dto/external/collection-uri.dto";
 
 export interface Storie {
@@ -13,7 +12,7 @@ export interface Storie {
   description: string;
   resourceURI: string;
   type: string;
-  modified: Date;
+  modified: Date | null;
   thumbnail: Image;
   comics: CollectionURI | Comic[];
   series: CollectionURI | Serie[];

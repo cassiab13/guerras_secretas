@@ -11,7 +11,7 @@ export interface Event {
     title: string,
     description: string,
     resourceURI: string,
-    modified: Date,
+    modified: Date | null,
     start: Date,
     end: Date,
     thumbnail: Image,
@@ -19,7 +19,5 @@ export interface Event {
     stories: CollectionURI | Storie[],
     series: CollectionURI | Serie[],
     characters: CollectionURI | Character[]
-    creators: CollectionURI | Creator[],
-    next: any | null,
-    previous: any | null
+    creators: CollectionURI | Creator[]
 }

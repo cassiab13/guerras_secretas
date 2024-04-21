@@ -16,4 +16,10 @@ export class CharacterRepository {
   public async findAll(): Promise<Character[]> {
     return characterModel.find();
   }
+
+  public async updateMany(characters: Character[]): Promise<void> {
+    for (const character of characters) {
+        await this.characterModel.updateOne({ id: character.id }, character);
+    }
+  }
 }

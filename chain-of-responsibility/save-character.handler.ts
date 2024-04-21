@@ -41,7 +41,7 @@ export class SaveCharacterHandler implements SaveHandler {
     private async filterCharacters(type: any, response: ResponseAPI<CharacterExternal>[]): Promise<void> {
 
         type.characters = [];
-        const allCharacters: CharacterExternal[] = response.map(response => response.data.results).flat();
+        const allCharacters: CharacterExternal[] = response.map(response => response.data?.results).flat();
         const sizeCharacters: number = allCharacters.length;
         
         for (let i = 0; i < sizeCharacters; i++) {

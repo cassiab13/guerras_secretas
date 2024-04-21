@@ -4,18 +4,24 @@ import { Storie } from "types/storie.types";
 
 export class StorieRepository {
 
-    private storieMode: Model<Storie>;
+    private storieModel: Model<Storie>;
 
     constructor() {
-        this.storieMode = storieModel;
+        this.storieModel = storieModel;
     }
 
     public async create(storie: Storie): Promise<Storie> {
-        return this.storieMode.create(storie);
+        return this.storieModel.create(storie);
     }
 
     public async findAll(): Promise<Storie[]> {
-        return this.storieMode.find();
-    } 
+        return this.storieModel.find();
+    }
+
+    public async updateMany(stories: Storie[]): Promise<void> {
+        for (const storie of stories) {
+            await this.storieModel.updateOne({ id: storie.id }, storie);
+        }
+    }
 
 }

@@ -3,7 +3,6 @@ import { Serie } from "./serie.types";
 import { Storie } from "./storie.types";
 import { Comic } from "./comic.types";
 import { Event } from "./event.types";
-import { ObjectId } from "mongoose";
 import { CollectionURI } from "dto/external/collection-uri.dto";
 
 export interface Creator {
@@ -14,7 +13,7 @@ export interface Creator {
   suffix: string;
   fullName: string;
   role: string;
-  modified: Date;
+  modified: Date | null;
   resourceURI: string;
   thumbnail: Image;
   series: CollectionURI | Serie[];

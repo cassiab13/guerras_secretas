@@ -12,7 +12,7 @@ const creatorSchema = new Schema(
     role: { type: String },
     modified: { type: Date },
     resourceURI: { type: String },
-    thumbnail: { type: Schema.Types.ObjectId, ref: "Image" },
+    thumbnail: { type: Object },
     series: [{ type: Schema.Types.ObjectId, ref: "Serie" }],
     stories: [{ type: Schema.Types.ObjectId, ref: "Storie" }],
     comics: [{ type: Schema.Types.ObjectId, ref: "Comic" }],

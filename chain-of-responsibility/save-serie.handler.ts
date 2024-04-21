@@ -5,7 +5,7 @@ import { ResponseAPI } from "../dto/external/response-api.dto";
 import { Request } from "../utils/external/request.utils";
 import { SerieAdapter } from "../adapter/serie.adapter";
 import { SerieExternal } from "dto/external/serie-external.dto";
-import { SerieManager } from "manager/serie.manager";
+import { SerieManager } from "../manager/serie.manager";
 
 export class SaveSerieHandler implements SaveHandler {
 
@@ -41,12 +41,12 @@ export class SaveSerieHandler implements SaveHandler {
     private async filterSeries(type: any, response: ResponseAPI<SerieExternal>[]): Promise<void> {
 
         type.series = [];
-        const allSeries: SerieExternal[] = response.map(response => response.data.results).flat();
+        const allSeries: SerieExternal[] = response.map(response => response.data?.results).flat();
         const sizeSeries: number = allSeries.length;
         
         for (let i = 0; i < sizeSeries; i++) {
 
-            const serie: Serie = await this.serieAdapter.toInternal(allSeries[i]);
+            const serie: Serie = await this.serieAdapter.toInternalSave(allSeries[i]);
             const newSerie: Serie = await this.serieManager.findSerie(serie);
 
             type.series.push(newSerie);

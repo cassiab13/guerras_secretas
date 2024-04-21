@@ -18,4 +18,10 @@ export class EventRepository {
         return this.eventModel.find();
     }
 
+    public async updateMany(events: Event[]): Promise<void> {
+        for (const event of events) {
+            await this.eventModel.updateOne({ id: event.id }, event);
+        }
+    }
+
 }

@@ -1,5 +1,4 @@
 import { ComicText } from "../../types/comit-text.types";
-import { SerieSummaryExternal } from "./serie-summary-external.dto";
 import { ComicDateExternal } from "./comic-date-external.dto";
 import { ComicPrice } from "../../types/comic-price.types";
 import { ImageExternal } from "./image-external.dto";
@@ -26,7 +25,6 @@ export interface ComicExternal {
   pageCount: number;
   resourceURI: string;
   textObjects: ComicText[];
-  series: SerieSummaryExternal;
   dates: ComicDateExternal[];
   prices: ComicPrice[];
   thumbnail: ImageExternal;

@@ -1,7 +1,6 @@
 import { Comic } from "types/comic.types";
 import { CollectionURI } from "./collection-uri.dto";
 import { ImageExternal } from "./image-external.dto";
-import { SerieSummaryExternal } from "./serie-summary-external.dto";
 import { Storie } from "types/storie.types";
 import { Serie } from "types/serie.types";
 import { Character } from "types/character.types";
@@ -20,7 +19,5 @@ export interface EventExternal {
     stories: CollectionURI | Storie[],
     series: CollectionURI | Serie[],
     characters: CollectionURI | Character[],
-    creators: CollectionURI | Creator[],
-    next: SerieSummaryExternal,
-    previous: SerieSummaryExternal
+    creators: CollectionURI | Creator[]
 }

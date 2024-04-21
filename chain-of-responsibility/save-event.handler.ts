@@ -42,7 +42,7 @@ export class SaveEventHandler implements SaveHandler {
     private async filterEvents(type: any, response: ResponseAPI<EventExternal>[]): Promise<void> {
 
         type.events = [];
-        const allEvents: EventExternal[] = response.map(response => response.data.results).flat();
+        const allEvents: EventExternal[] = response.map(response => response.data?.results).flat();
         const sizeEvents: number = allEvents.length;
         
         for (let i = 0; i < sizeEvents; i++) {

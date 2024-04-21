@@ -41,8 +41,9 @@ export class SaveComicHandler implements SaveHandler {
 
     private async filterComics(type: any, response: ResponseAPI<ComicExternal>[]): Promise<void> {
 
+
         type.comics = [];
-        const allComics: ComicExternal[] = response.map(response => response.data.results).flat();
+        const allComics: ComicExternal[] = response.map(response => response.data?.results).flat();
         const sizeComics: number = allComics.length;
         
         for (let i = 0; i < sizeComics; i++) {

@@ -41,7 +41,7 @@ export class SaveStorieHandler implements SaveHandler {
     private async filterStories(type: any, response: ResponseAPI<StorieExternal>[]): Promise<void> {
 
         type.stories = [];
-        const allStories: StorieExternal[] = response.map(response => response.data.results).flat();
+        const allStories: StorieExternal[] = response.map(response => response.data?.results).flat();
         const sizeStories: number = allStories.length;
         
         for (let i = 0; i < sizeStories; i++) {

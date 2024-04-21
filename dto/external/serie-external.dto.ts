@@ -21,6 +21,4 @@ export interface SerieExternal {
   events: CollectionURI | Event[];
   characters: CollectionURI | Character[];
   creators: CollectionURI | Creator[];
-  next: CollectionURI;
-  previous: CollectionURI;
 }

@@ -1,15 +1,15 @@
 import { StorieExternal } from "dto/external/storie-external.dto";
 import { Adapter } from "./adapter";
 import { Storie } from "types/storie.types";
-import { ImageService } from "../service/external/image.service";
+import { ImageAdapter } from "./image.adapter";
 
 export class StorieAdapter implements Adapter<StorieExternal, Storie> {
 
-  private imageService: ImageService = new ImageService();
+  private imageAdapter: ImageAdapter = new ImageAdapter();
 
   public async toInternal(external: StorieExternal): Promise<Storie> {
   
-    const image = await this.imageService.save(external.thumbnail);
+    const image = await this.imageAdapter.toInternal(external?.thumbnail);
     
     return {
       id: external.id,
@@ -29,7 +29,9 @@ export class StorieAdapter implements Adapter<StorieExternal, Storie> {
 
   public async toInternalSave(external: StorieExternal): Promise<Storie> {
     
-    const image = await this.imageService.save(external.thumbnail);
+    const image = await this.imageAdapter.toInternal(external?.thumbnail);
+    const modified: Date = new Date(external?.modified); 
+    const date: Date | null = isNaN(modified.getTime()) ? null : modified;
     
     return {
       id: external.id,
@@ -37,7 +39,7 @@ export class StorieAdapter implements Adapter<StorieExternal, Storie> {
       description: external.description,
       resourceURI: external.resourceURI,
       type: external.type,
-      modified: new Date(external.modified),
+      modified: date,
       thumbnail: image,
       comics: [],
       series: [],

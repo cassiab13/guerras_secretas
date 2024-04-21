@@ -9,7 +9,7 @@ const storieSchema = new Schema(
     resourceURI: { type: String },
     type: { type: String },
     modified: { type: Date },
-    thumbnail: { type: Schema.Types.ObjectId, ref: "Image" },
+    thumbnail: { type: Object },
     comics: [{ type: Schema.Types.ObjectId, ref: "Comic" }],
     series: [{ type: Schema.Types.ObjectId, ref: "Serie" }],
     events: [{ type: Schema.Types.ObjectId, ref: "Event" }],

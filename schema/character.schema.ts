@@ -8,7 +8,7 @@ const characterSchema = new Schema(
     description: { type: String },
     modified: { type: Date },
     resourceURI: { type: String },
-    thumbnail: { type: Schema.Types.ObjectId, ref: "Image", required: true },
+    thumbnail: { type: Object },
     comics: [{ type: Schema.Types.ObjectId, ref: "Comic", required: true }],
     stories: [{ type: Schema.Types.ObjectId, ref: "Storie", required: true }],
     events: [{ type: Schema.Types.ObjectId, ref: "Event", required: true }],

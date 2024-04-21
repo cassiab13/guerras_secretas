@@ -16,4 +16,11 @@ export class CreatorRepository {
   public async findAll(): Promise<Creator[]> {
     return creatorModel.find();
   }
+
+  public async updateMany(creators: Creator[]): Promise<void> {
+    for (const creator of creators) {
+        await this.creatorModel.updateOne({ id: creator.id }, creator);
+    }
+  }
+  
 }

@@ -7,7 +7,6 @@ import { Serie } from "./serie.types";
 import { Image } from "./image.types";
 import { Event } from "./event.types";
 import { ComicText } from "./comit-text.types";
-import { ObjectId } from 'mongoose';
 import { CollectionURI } from 'dto/external/collection-uri.dto';
 
 export interface Comic {
@@ -17,7 +16,7 @@ export interface Comic {
   issueNumber: number;
   variantDescription: string;
   description: string;
-  modified: Date;
+  modified: Date | null;
   isbn: string;
   upc: string;
   diamondCode: string;
@@ -26,7 +25,6 @@ export interface Comic {
   format: string;
   pageCount: number;
   resourceURI: string;
-  serie: Serie | null;
   textObjects: ComicText[];
   dates: ComicDate[];
   prices: ComicPrice[];

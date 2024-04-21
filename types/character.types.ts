@@ -9,7 +9,7 @@ export interface Character {
   id: number;
   name: string;
   description: string;
-  modified: Date;
+  modified: Date | null;
   resourceURI: string;
   thumbnail: Image;
   comics: CollectionURI | Comic[];

@@ -3,9 +3,7 @@ import { Comic } from "./comic.types";
 import { Storie } from "./storie.types";
 import { Character } from "./character.types";
 import { Creator } from "./creator.types";
-import { SerieSummary } from "./serie-summary.types";
 import { Event } from "./event.types";
-import { ObjectId } from "mongoose";
 import { CollectionURI } from "dto/external/collection-uri.dto";
 
 export interface Serie {
@@ -16,13 +14,11 @@ export interface Serie {
   startYear: number;
   endYear: number;
   rating: string;
-  modified: Date;
+  modified: Date | null;
   thumbnail: Image;
   comics: CollectionURI | Comic[];
   stories: CollectionURI | Storie[];
   events: CollectionURI | Event[];
   characters: CollectionURI | Character[];
   creators: CollectionURI | Creator[];
-  next: any | null;
-  previous: any | null;
 }

@@ -1,15 +1,15 @@
 import { CreatorExternal } from "dto/external/creator-external.dto";
 import { Adapter } from "./adapter";
 import { Creator } from "../types/creator.types";
-import { ImageService } from "../service/external/image.service";
+import { ImageAdapter } from "./image.adapter";
 
 export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
 
-  private imageService: ImageService = new ImageService();
+  private imageAdapter: ImageAdapter = new ImageAdapter();
 
   public async toInternal(external: CreatorExternal): Promise<Creator> {
   
-    const image = await this.imageService.save(external.thumbnail);
+    const image = await this.imageAdapter.toInternal(external?.thumbnail);
 
     return {
       id: external.id,
@@ -31,7 +31,9 @@ export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
 
   public async toInternalSave(external: CreatorExternal): Promise<Creator> {
   
-    const image = await this.imageService.save(external.thumbnail);
+    const image = await this.imageAdapter.toInternal(external?.thumbnail);
+    const modified: Date = new Date(external?.modified); 
+    const date: Date | null = isNaN(modified.getTime()) ? null : modified;
 
     return {
       id: external.id,
@@ -41,7 +43,7 @@ export class CreatorAdapter implements Adapter<CreatorExternal, Creator> {
       suffix: external.suffix,
       fullName: external.fullName,
       role: external.role,
-      modified: new Date(external.modified),
+      modified: date,
       resourceURI: external.resourceURI,
       thumbnail: image,
       series: [],

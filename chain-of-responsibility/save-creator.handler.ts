@@ -42,7 +42,7 @@ export class SaveCreatorHandler implements SaveHandler {
     private async filterCreators(type: any, response: ResponseAPI<CreatorExternal>[]): Promise<void> {
 
         type.creators = [];
-        const allCreators: CreatorExternal[] = response.map(response => response.data.results).flat();
+        const allCreators: CreatorExternal[] = response.map(response => response.data?.results).flat();
         const sizeCreators: number = allCreators.length;
         
         for (let i = 0; i < sizeCreators; i++) {

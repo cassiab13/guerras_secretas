@@ -1,15 +1,15 @@
 import { EventExternal } from "../dto/external/event-external.dto";
 import { Event } from "../types/event.types";
 import { Adapter } from "./adapter";
-import { ImageService } from "../service/external/image.service";
+import { ImageAdapter } from "./image.adapter";
 
 export class EventAdapter implements Adapter<EventExternal, Event> {
 
-    private imageService: ImageService = new ImageService();
+    private imageAdapter: ImageAdapter = new ImageAdapter();
 
     public async toInternal(external: EventExternal): Promise<Event> {
 
-        const image = await this.imageService.save(external.thumbnail);
+        const image = await this.imageAdapter.toInternal(external?.thumbnail);
         
         return {
             id: external.id,
@@ -24,22 +24,22 @@ export class EventAdapter implements Adapter<EventExternal, Event> {
             stories: external.stories, 
             series: external.series, 
             characters: external.characters,
-            creators: external.creators, 
-            next: null,
-            previous: null
+            creators: external.creators
         };
     }
 
     public async toInternalSave(external: EventExternal): Promise<Event> {
 
-        const image = await this.imageService.save(external.thumbnail);
+        const image = await this.imageAdapter.toInternal(external?.thumbnail);
+        const modified: Date = new Date(external?.modified); 
+        const date: Date | null = isNaN(modified.getTime()) ? null : modified;
         
         return {
             id: external.id,
             title: external.title,
             description: external.description,
             resourceURI: external.resourceURI,
-            modified: external.modified,
+            modified: date,
             start: external.start,
             end: external.end,
             thumbnail: image,
@@ -47,9 +47,7 @@ export class EventAdapter implements Adapter<EventExternal, Event> {
             stories: [], 
             series: [], 
             characters: [],
-            creators: [], 
-            next: null,
-            previous: null
+            creators: []
         };
     }
 
