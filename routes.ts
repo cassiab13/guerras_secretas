@@ -1,12 +1,16 @@
 import { Router } from "express";
-import { ExternalService } from './service/external/event.service';
-import { ExternalController } from './controller/external/external.controller';
+import { PopulateController } from "./src/controller/populate.controller";
+import { PopulateService } from "./src/service/populate.service";
+import { UserController } from "./src/controller/user.controller";
 
 const routes = Router()
 
-const externalService = new ExternalService();
-const externalController = new ExternalController(externalService);
+const testeController = new UserController();
 
-routes.post('/series/:id', externalController.save.bind(externalController));
+const populateService = new PopulateService();
+const populateController = new PopulateController(populateService);
+
+routes.post('/populate/:id', populateController.save.bind(populateController));
+routes.post('/post', testeController.create.bind(testeController));
 
 export default routes;
