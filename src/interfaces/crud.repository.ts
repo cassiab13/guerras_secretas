@@ -1,7 +1,15 @@
-export interface ICrudRepository<T> {
-  create(data: T): Promise<T>;
-  update(id: string, data: T): Promise<void>;
-  delete(id: string): Promise<void>;
-  findById(id: string): Promise<T | null>;
-  findAll(): Promise<T[]>;
+export interface ICrudRepository<Entity> {
+
+    findAll(): Promise<Entity[]>;
+
+    findAllPage(skip: number, limit: number): Promise<Entity[]>;
+
+    findById(id: string): Promise<Entity | null>;
+
+    create(data: Entity): Promise<Entity | void>;
+
+    update(id: string, data: Entity): Promise<void>;
+
+    delete(id: string): Promise<void>;
+
 }

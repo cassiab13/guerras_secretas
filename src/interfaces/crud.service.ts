@@ -1,7 +1,15 @@
-export interface ICrudService<T> {
-  create(data: T): Promise<T>;
-  update(id: string, data: T): Promise<void>;
-  delete(id: string): Promise<void>;
-  findById(id: string): Promise<T | null>;
-  findAll(): Promise<T[]>;
+export interface ICrudService<Entity> {
+
+    findAll(page: number, pageSize: number): Promise<Entity[]>;
+
+    find(id: string): Promise<Entity>;
+    
+    create(data: Entity): Promise<void>; // Verificar de passar um DTO
+
+    update(id: string, data: Entity): Promise<void>; // Verificar de passar um DTO
+
+    delete(id: string): Promise<void>;
+
+    getClassName(): string;
+
 }

@@ -1,19 +1,25 @@
 import { Request, Response } from 'express';
 import { User } from '../../src/types/user.types';
-import { Token } from '../../src/utils/token.utils';
+import { CrudController } from './crud.controller';
+import { UserService } from '../service/user.service';
+import { StatusCode } from '../enums/status.code';
 
-export class UserController {
+export class UserController extends CrudController<User> {
 
-    public async create(request: Request, response: Response) {
+    protected readonly service: UserService;
 
-        const user: User = request.body;
-        const token: Token = new Token();
-        const tokenHash = token.generate(user);
-        console.log(tokenHash);
-        token.verify(tokenHash);
-        response.status(200).json();
-
+    constructor(service: UserService) {
+        super(service);
+        this.service = service;
     }
 
+    public async auth(request: Request, response: Response) {
+
+        const user: User = request.body;
+        const token: string = await this.service.auth(user);
+
+        response.status(StatusCode.SUCCESS).json(token);
+
+    }
 
 }

@@ -1,11 +1,12 @@
 import { Comic } from '../types/comic.types';
 import { ComicRepository } from '../repository/comic.repository';
+import comicModel from '../schema/comic.schema'
 
 export class ComicManager {
 
     private static instance: ComicManager | null = null;
     private static comicById: Map<number, Comic> = new Map();
-    private static readonly repository: ComicRepository = new ComicRepository();
+    private static readonly repository: ComicRepository = new ComicRepository(comicModel);
     
     public static getInstance(): ComicManager {
 

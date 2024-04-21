@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { User } from 'src/types/user.types';
+import { UnauthorizedError } from './errors/unauthorized.error';
+import { StatusCode } from '../enums/status.code';
 
 export class Token {
 
-    private readonly SECRET_KEY: string = process.env.SECRET_KEY!;
+    private static readonly SECRET_KEY: string = process.env.SECRET_KEY!;
 
-    public generate(user: User): string {
+    public static generate(user: User): string {
         const payload = {
           email: user.email,
           isAdmin: user.isAdmin
@@ -14,13 +16,11 @@ export class Token {
         return jwt.sign(payload, this.SECRET_KEY, { expiresIn: '1h' });
     }
 
-    public verify(token: string): boolean {
+    public static verify(token: string): jwt.JwtPayload {
         try {
-            jwt.verify(token, this.SECRET_KEY);
-            console.log(jwt.verify(token, this.SECRET_KEY));
-            return true;
+            return jwt.verify(token, this.SECRET_KEY) as jwt.JwtPayload;
         } catch {
-            return false;
+            throw new UnauthorizedError("Token inválido", StatusCode.UNAUTHORIZED);
         }
     }
 

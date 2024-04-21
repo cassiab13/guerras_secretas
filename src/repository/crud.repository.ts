@@ -1,33 +1,40 @@
-import { ICrudRepository } from "interfaces/crud.repository";
-import { FilterQuery, Model, UpdateQuery } from "mongoose";
+import { Document, FilterQuery, Model, UpdateQuery } from "mongoose";
+import { ICrudRepository } from "src/interfaces/crud.repository";
 
-export class CrudRepository<T> implements ICrudRepository<T> {
-  protected readonly model: Model<T>;
+export abstract class CrudRepository<Entity> implements ICrudRepository<Entity> {
 
-  constructor(schema: Model<T>) {
-    this.model = schema;
-  }
+    protected readonly model: Model<Entity>;
 
-  public async create(data: T): Promise<T> {
-    return this.model.create(data);
-  }
+    constructor(model: Model<Entity>) {
+        this.model = model;
+    }
 
-  public async update(id: string, data: T): Promise<void> {
-    this.model.updateOne(
-      { _id: id } as FilterQuery<T>,
-      data as unknown as UpdateQuery<T>
-    );
-  }
+    public async create(data: Entity): Promise<Entity | void> {
+        this.model.create(data);
+    }
 
-  public async delete(id: string): Promise<void> {
-    await this.model.deleteOne({ _id: id } as FilterQuery<T>);
-  }
+    public async update(id: string, data: Entity): Promise<void> {
+        
+        await this.model.updateOne(
+        { _id: id } as FilterQuery<Entity>,
+        data as unknown as UpdateQuery<Entity>
+        );
+    }
 
-  public async findById(id: string): Promise<T | null> {
-    return this.model.findById(id);
-  }
+    public async delete(id: string): Promise<void> {
+        await this.model.deleteOne({ _id: id } as FilterQuery<Entity>);
+    }
 
-  public async findAll(): Promise<T[]> {
-    return this.model.find();
-  }
+    public async findById(id: string): Promise<Entity | null> {
+        return this.model.findById(id);
+    }
+
+    public async findAll(): Promise<Entity[]> {
+        return this.model.find();
+    }
+
+    public async findAllPage(skip: number, limit: number): Promise<Entity[]> {
+      return this.model.find().skip(skip).limit(limit);
+    }
+
 }

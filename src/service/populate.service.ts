@@ -37,6 +37,7 @@ import { StorieExternal } from '../dto/external/storie-external.dto';
 import { Storie } from '../types/storie.types';
 import { EventExternal } from '../dto/external/event-external.dto';
 import { Event } from '../types/event.types';
+import comicModel from '../schema/comic.schema'
 
 export class PopulateService {
 
@@ -45,7 +46,7 @@ export class PopulateService {
 
     private readonly comicAdapter: ComicAdapter = new ComicAdapter();
     private readonly comicManager: ComicManager = ComicManager.getInstance();
-    private readonly comicRepository: ComicRepository = new ComicRepository();
+    private readonly comicRepository: ComicRepository = new ComicRepository(comicModel);
 
     private readonly creatorAdapter: CreatorAdapter = new CreatorAdapter();
     private readonly creatorManager: CreatorManager = CreatorManager.getInstance();

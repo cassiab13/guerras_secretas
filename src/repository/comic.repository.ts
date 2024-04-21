@@ -1,24 +1,19 @@
 import { Model } from "mongoose";
-import comicModel from "../schema/comic.schema";
 import { Comic } from "src/types/comic.types";
+import { CrudRepository } from "./crud.repository";
 
-export class ComicRepository {
-  private readonly comicModel: Model<Comic>;
+export class ComicRepository extends CrudRepository<Comic> {
 
-  constructor() {
-    this.comicModel = comicModel;
+  constructor(model: Model<Comic>) {
+    super(model);
   }
 
   public async create(comic: Comic): Promise<Comic> {
-    return this.comicModel.create(comic);
-  }
-
-  public async findAll(): Promise<Comic[]> {
-    return comicModel.find();
+    return this.model.create(comic);
   }
 
   public async updateMany(comics: Comic[]): Promise<void> {
     const comicIds = comics.map(comic => comic.id);
-    await this.comicModel.updateMany({ id: { $in: comicIds } }, { $set: comics });
+    await this.model.updateMany({ id: { $in: comicIds } }, { $set: comics });
   }
 }
