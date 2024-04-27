@@ -18,9 +18,8 @@ export class EventRepository {
         return this.eventModel.find();
     }
 
-    public async updateMany(events: Event[]): Promise<void> {
-        const eventIds = events.map(event => event.id);
-        await this.eventModel.updateMany({ id: { $in: eventIds } }, { $set: events });
+    public async createAll(events: Event[]): Promise<void> {
+        await this.eventModel.create(events);
     }
 
 }

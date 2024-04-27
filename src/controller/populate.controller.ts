@@ -12,10 +12,24 @@ export class PopulateController {
     public async save(request: Request, response: Response) {
 
         const id: string = request.params.id;
-        this.service.save(id);
+        const fields: string[] = ['comics', 'creators', 'characters', 'stories', 'events'];
+        const updates: any = this.catchFieldsForUpdate(request.query, fields);
+
+        this.service.serie(id, updates);
 
         response.status(201).json();
 
+    }
+
+    private catchFieldsForUpdate(query: any, fields: string[]) {
+
+        const updates: any = {};
+
+        fields.forEach(field => {
+            updates[field] = query[field] === 'true' ? true : false;
+        });
+
+        return updates;
     }
 
 }

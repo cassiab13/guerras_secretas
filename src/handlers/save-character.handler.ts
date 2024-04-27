@@ -5,13 +5,13 @@ import { CharacterExternal } from "../dto/external/character-external.dto";
 import { Request } from "../utils/request.utils";
 import { CharacterAdapter } from "../adapter/character.adapter";
 import { Character } from "../types/character.types";
-import { CharacterManager } from "../managers/character.manager";
+import { CharacterCaching } from "../managers/caching/character.caching";
 
 export class SaveCharacterHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null;
     private characterAdapter: CharacterAdapter = new CharacterAdapter();
-    private characterManager: CharacterManager = CharacterManager.getInstance();
+    private characterCaching: CharacterCaching = CharacterCaching.getInstance();
     private entity: any;
     private collectionUri: CollectionURI;
 
@@ -47,7 +47,7 @@ export class SaveCharacterHandler implements SaveHandler {
         for (let i = 0; i < sizeCharacters; i++) {
 
             const character: Character = await this.characterAdapter.toInternalSave(allCharacters[i]);
-            const newCharacter: Character = await this.characterManager.findCharacter(character);
+            const newCharacter: Character = await this.characterCaching.findCharacter(character);
 
             type.characters.push(newCharacter);
             

@@ -1,4 +1,4 @@
-import { StorieManager } from "../managers/storie.manager";
+import { StorieCaching } from "../managers/caching/storie.caching";
 import { StorieAdapter } from "../adapter/storie.adapter";
 import { SaveHandler } from "./save.handler";
 import { CollectionURI } from "../dto/external/collection-uri.dto";
@@ -11,7 +11,7 @@ export class SaveStorieHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null;
     private storieAdapter: StorieAdapter = new StorieAdapter();
-    private storieManager: StorieManager = StorieManager.getInstance();
+    private storieCaching: StorieCaching = StorieCaching.getInstance();
     private entity: any;
     private collectionUri: CollectionURI;
 
@@ -47,7 +47,7 @@ export class SaveStorieHandler implements SaveHandler {
         for (let i = 0; i < sizeStories; i++) {
 
             const storie: Storie = await this.storieAdapter.toInternalSave(allStories[i]);
-            const newStorie: Storie = await this.storieManager.findStorie(storie);
+            const newStorie: Storie = await this.storieCaching.findStorie(storie);
 
             type.stories.push(newStorie);
             

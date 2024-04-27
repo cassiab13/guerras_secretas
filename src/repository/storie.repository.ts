@@ -18,9 +18,8 @@ export class StorieRepository {
         return this.storieModel.find();
     }
 
-    public async updateMany(stories: Storie[]): Promise<void> {
-        const storyIds = stories.map(story => story.id);
-        await this.storieModel.updateMany({ id: { $in: storyIds } }, { $set: stories });
+    public async createAll(stories: Storie[]): Promise<void> {
+        await this.storieModel.create(stories);
     }
 
 }

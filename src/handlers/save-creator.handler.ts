@@ -1,6 +1,6 @@
 import { CreatorAdapter } from '../adapter/creator.adapter';
 import { Creator } from '../types/creator.types';
-import { CreatorManager } from '../managers/creator.manager';
+import { CreatorCaching } from '../managers/caching/creator.caching';
 import { SaveHandler } from "./save.handler";
 import { Request } from "../utils/request.utils";
 import { ResponseAPI } from "../dto/external/response-api.dto";
@@ -10,7 +10,7 @@ import { CollectionURI } from 'src/dto/external/collection-uri.dto';
 export class SaveCreatorHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null
-    private creatorManager: CreatorManager = CreatorManager.getInstance();
+    private creatorCaching: CreatorCaching = CreatorCaching.getInstance();
     private creatorAdapter: CreatorAdapter = new CreatorAdapter();
     private entity: any;
     private collectionUri: CollectionURI;
@@ -48,10 +48,9 @@ export class SaveCreatorHandler implements SaveHandler {
         for (let i = 0; i < sizeCreators; i++) {
 
             const creator: Creator = await this.creatorAdapter.toInternalSave(allCreators[i]);
-            const newCreator: Creator = await this.creatorManager.findCreator(creator);
+            const newCreator: Creator = await this.creatorCaching.findCreator(creator);
 
-            type.creators.push(newCreator);
-            
+            type.creators.push(newCreator);            
         }
     
     }

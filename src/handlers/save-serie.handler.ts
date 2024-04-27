@@ -5,13 +5,13 @@ import { ResponseAPI } from "../dto/external/response-api.dto";
 import { Request } from "../utils/request.utils";
 import { SerieAdapter } from "../adapter/serie.adapter";
 import { SerieExternal } from "../dto/external/serie-external.dto";
-import { SerieManager } from "../managers/serie.manager";
+import { SerieCaching } from '../managers/caching/serie.caching';
 
 export class SaveSerieHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null;
     private serieAdapter: SerieAdapter = new SerieAdapter();
-    private serieManager: SerieManager = SerieManager.getInstance();
+    private serieCaching: SerieCaching = SerieCaching.getInstance();
     private entity: any;
     private collectionUri: CollectionURI;
 
@@ -47,7 +47,7 @@ export class SaveSerieHandler implements SaveHandler {
         for (let i = 0; i < sizeSeries; i++) {
 
             const serie: Serie = await this.serieAdapter.toInternalSave(allSeries[i]);
-            const newSerie: Serie = await this.serieManager.findSerie(serie);
+            const newSerie: Serie = await this.serieCaching.find(serie);
 
             type.series.push(newSerie);
             

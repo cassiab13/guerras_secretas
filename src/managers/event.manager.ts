@@ -1,48 +1,55 @@
-import { Event } from '../types/event.types';
+import { Manager } from './manager';
+import { Serie } from '../types/serie.types';
+import { SaveStorieHandler } from '../handlers/save-storie.handler';
+import { CollectionURI } from '../dto/external/collection-uri.dto';
+import { ResponseAPI } from '../dto/external/response-api.dto';
+import { Request } from '../utils/request.utils';
+import { SaveComicHandler } from '../handlers/save-comic.handler';
+import { SaveSerieHandler } from '../handlers/save-serie.handler';
+import { EventAdapter } from '../adapter/event.adapter';
+import { EventCaching } from './caching/event.caching';
 import { EventRepository } from '../repository/event.repository';
+import { EventExternal } from '../dto/external/event-external.dto';
+import { SaveCreatorHandler } from '../handlers/save-creator.handler';
+import { SaveCharacterHandler } from '../handlers/save-character.handler';
+import { Event } from '../types/event.types';
 
-export class EventManager {
+export class EventManager implements Manager {
 
-    private static instance: EventManager | null = null;
-    private static eventById: Map<number, Event> = new Map();
-    private static readonly repository: EventRepository = new EventRepository();
-    
-    public static getInstance(): EventManager {
+    private adapter: EventAdapter = new EventAdapter();
+    private caching: EventCaching = EventCaching.getInstance();
+    private repository: EventRepository = new EventRepository();
 
-        if(!EventManager.instance) {
-            EventManager.instance = new EventManager();
-        }
+    public async save(serie: Serie) {
 
-        return EventManager.instance;
-    }
+        console.time('event');
+        const response: ResponseAPI<EventExternal>[] = await Request.findByCollection(serie.events as CollectionURI);
+        const allEvents: EventExternal[] = response.flatMap(response => response.data.results);
 
-    public async findEvent(event: Event): Promise<Event> {
-        
-        if (EventManager.eventById.has(event.id)) {
-            return EventManager.eventById.get(event.id)!;
-        }
+        const newEvents: Event[] = [];
+        await Promise.all(allEvents.map(async (eventExternal: EventExternal) => {
 
-        return this.saveEvent(event);
-    }
-    
-    private async saveEvent(event: Event): Promise<Event> {
-        
-        const newEvent: Event = await EventManager.repository.create(event);
-        EventManager.eventById.set(newEvent.id, newEvent);
-        
-        return newEvent; 
-    }
+            const event: Event = await this.adapter.toInternalSave(eventExternal);
+            const newEvent: Event = await this.caching.findEvent(event);
+            
+            const saveCreator: SaveCreatorHandler = new SaveCreatorHandler(newEvent, eventExternal.creators as CollectionURI);
+            const saveCharacter: SaveCharacterHandler = new SaveCharacterHandler(newEvent, eventExternal.characters as CollectionURI);
+            const saveStorie: SaveStorieHandler = new SaveStorieHandler(newEvent, eventExternal.stories as CollectionURI);
+            const saveComic: SaveComicHandler = new SaveComicHandler(newEvent, eventExternal.comics as CollectionURI);
+            const saveSerie: SaveSerieHandler = new SaveSerieHandler(newEvent, eventExternal.series as CollectionURI);
 
-    private async populateUriByObjectId(): Promise<void> {
+            saveCreator.setNext(saveCharacter);
+            saveCharacter.setNext(saveStorie);
+            saveStorie.setNext(saveComic);
+            saveComic.setNext(saveSerie);
 
-        const events: Event[] = await EventManager.repository.findAll();
-        events.map(event => {
-            EventManager.eventById.set(event.id, event);
-        });
-    }
+            await saveCreator.save();
+            newEvents.push(newEvent);
 
-    private constructor() {
-        this.populateUriByObjectId();
+        }));
+
+        this.repository.createAll(newEvents);
+        console.timeEnd('event');
     }
 
 }

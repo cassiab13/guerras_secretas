@@ -17,8 +17,7 @@ export class CharacterRepository {
     return characterModel.find();
   }
 
-  public async updateMany(characters: Character[]): Promise<void> {
-    const characterIds = characters.map(character => character.id);
-    await this.characterModel.updateMany({ id: { $in: characterIds } }, { $set: characters });
+  public async createAll(characters: Character[]): Promise<void> {
+    await this.characterModel.create(characters);
   }
 }

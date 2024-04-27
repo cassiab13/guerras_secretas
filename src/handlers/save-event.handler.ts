@@ -5,14 +5,14 @@ import { ResponseAPI } from "../dto/external/response-api.dto";
 import { Event } from "../types/event.types";
 import { SaveHandler } from "./save.handler";
 import { Request } from "../utils/request.utils";
-import { EventManager } from "../managers/event.manager";
+import { EventCaching } from "../managers/caching/event.caching";
 import { CollectionURI } from "../dto/external/collection-uri.dto";
 
 export class SaveEventHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null;
     private eventAdapter: EventAdapter = new EventAdapter();
-    private eventManager: EventManager = EventManager.getInstance();
+    private eventCaching: EventCaching = EventCaching.getInstance();
     private toUpdate: any;
     private collectionUri: CollectionURI;
 
@@ -48,7 +48,7 @@ export class SaveEventHandler implements SaveHandler {
         for (let i = 0; i < sizeEvents; i++) {
 
             const event: Event = await this.eventAdapter.toInternalSave(allEvents[i]);
-            const newEvent: Event = await this.eventManager.findEvent(event);
+            const newEvent: Event = await this.eventCaching.findEvent(event);
 
             type.events.push(newEvent);
             

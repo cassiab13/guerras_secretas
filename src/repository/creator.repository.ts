@@ -17,10 +17,8 @@ export class CreatorRepository {
     return creatorModel.find();
   }
 
-  public async updateMany(creators: Creator[]): Promise<void> {
-    for (const creator of creators) {
-        await this.creatorModel.updateOne({ id: creator.id }, creator);
-    }
+  public async createAll(creators: Creator[]): Promise<void> {
+    await this.creatorModel.create(creators);
   }
   
 }

@@ -1,48 +1,49 @@
-import { Serie } from '../types/serie.types';
-import { SerieRepository } from '../repository/serie.repository';
+import { SerieAdapter } from "../adapter/serie.adapter";
+import { ResponseAPI } from "../dto/external/response-api.dto";
+import { SerieExternal } from "../dto/external/serie-external.dto";
+import { Request } from "../utils/request.utils";
+import { UrlExternalUtils } from "../utils/url.utils";
+import { SerieCaching } from "./caching/serie.caching";
+import { Serie } from "../types/serie.types";
+import { SaveCreatorHandler } from "../handlers/save-creator.handler";
+import { CollectionURI } from "../dto/external/collection-uri.dto";
+import { SaveCharacterHandler } from "../handlers/save-character.handler";
+import { SaveComicHandler } from "../handlers/save-comic.handler";
+import { SaveStorieHandler } from "../handlers/save-storie.handler";
+import { SaveEventHandler } from "../handlers/save-event.handler";
 
 export class SerieManager {
 
-    private static instance: SerieManager | null = null;
-    private static serieById: Map<number, Serie> = new Map();
-    private static readonly repository: SerieRepository = new SerieRepository();
-    
-    public static getInstance(): SerieManager {
+    private readonly serieAdapter: SerieAdapter = new SerieAdapter();
+    private readonly serieCaching: SerieCaching = SerieCaching.getInstance();
 
-        if(!SerieManager.instance) {
-            SerieManager.instance = new SerieManager();
-        }
+    public async save(id: string): Promise<Serie> {
 
-        return SerieManager.instance;
+        const url = UrlExternalUtils.generateFind("series", id);
+        const response: ResponseAPI<SerieExternal> = await Request.findByUrl(url);
+
+        const serie: Serie = await this.serieAdapter.toInternal(response.data.results[0]);
+        const newSerie: Serie = await this.updateSerie(serie);
+
+        await this.serieCaching.find(newSerie);
+        return response.data.results[0];
     }
 
-    public async findSerie(serie: Serie): Promise<Serie> {
-        
-        if (SerieManager.serieById.has(serie.id)) {
-            return SerieManager.serieById.get(serie.id)!;
-        }
+    private async updateSerie(serie: Serie): Promise<Serie> {
 
-        return this.saveSerie(serie);
-    }
-    
-    private async saveSerie(serie: Serie): Promise<Serie> {
-        
-        const newSerie: Serie = await SerieManager.repository.create(serie);
-        SerieManager.serieById.set(newSerie.id, newSerie);
-        
-        return newSerie; 
-    }
+        const saveCreator: SaveCreatorHandler = new SaveCreatorHandler(serie, serie.creators as CollectionURI);
+        const saveCharacter: SaveCharacterHandler = new SaveCharacterHandler(serie, serie.characters as CollectionURI);
+        const saveComic: SaveComicHandler = new SaveComicHandler(serie, serie.comics as CollectionURI);
+        const saveStorie: SaveStorieHandler = new SaveStorieHandler(serie, serie.stories as CollectionURI);
+        const saveEvent: SaveEventHandler = new SaveEventHandler(serie, serie.events as CollectionURI);
 
-    private async populateUriByObjectId(): Promise<void> {
+        saveCreator.setNext(saveCharacter);
+        saveCharacter.setNext(saveComic);
+        saveComic.setNext(saveStorie);
+        saveStorie.setNext(saveEvent);
 
-        const series: Serie[] = await SerieManager.repository.findAll();
-        series.map(serie => {
-            SerieManager.serieById.set(serie.id, serie);
-        });
-    }
+        return saveCreator.save();
 
-    private constructor() {
-        this.populateUriByObjectId();
     }
 
 }

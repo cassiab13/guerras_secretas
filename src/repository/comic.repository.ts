@@ -12,8 +12,7 @@ export class ComicRepository extends CrudRepository<Comic> {
     return this.model.create(comic);
   }
 
-  public async updateMany(comics: Comic[]): Promise<void> {
-    const comicIds = comics.map(comic => comic.id);
-    await this.model.updateMany({ id: { $in: comicIds } }, { $set: comics });
+  public async createAll(comics: Comic[]): Promise<void> {
+    await this.model.create(comics);
   }
 }

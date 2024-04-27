@@ -1,6 +1,6 @@
 import { SaveHandler } from "./save.handler";
 import { ComicAdapter } from "../adapter/comic.adapter";
-import { ComicManager } from "../managers/comic.manager";
+import { ComicCaching } from "../managers/caching/comic.caching";
 import { CollectionURI } from "../dto/external/collection-uri.dto";
 import { ResponseAPI } from "../dto/external/response-api.dto";
 import { ComicExternal } from "../dto/external/comic-external.dto";
@@ -11,7 +11,7 @@ export class SaveComicHandler implements SaveHandler {
 
     private nextHandler: SaveHandler | null = null;
     private comicAdapter: ComicAdapter = new ComicAdapter();
-    private comicManager: ComicManager = ComicManager.getInstance();
+    private comicCaching: ComicCaching = ComicCaching.getInstance();
     private entity: any;
     private collectionUri: CollectionURI;
 
@@ -48,7 +48,7 @@ export class SaveComicHandler implements SaveHandler {
         for (let i = 0; i < sizeComics; i++) {
 
             const comic: Comic = await this.comicAdapter.toInternalSave(allComics[i]);
-            const newComic: Comic = await this.comicManager.findComic(comic);
+            const newComic: Comic = await this.comicCaching.findComic(comic);
 
             type.comics.push(newComic);
             

@@ -35,15 +35,15 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
     public async findAll(page: number, pageSize: number): Promise<Entity[]> {
         
         const skip = (page - 1) * pageSize;
-        const hashRedis: string = KeyRedis.findPage(this.getClassName(), skip, pageSize);
-        const value: string | null | undefined = await getRedis(hashRedis);
+        // const hashRedis: string = KeyRedis.findPage(this.getClassName(), skip, pageSize);
+        // const value: string | null | undefined = await getRedis(hashRedis);
 
-        if (value) {
-            return JSON.parse(value);
-        }
+        // if (value && JSON.parse(value).length !== 0) {
+        //     return JSON.parse(value);
+        // }
 
         const result: Entity[] = await this.repository.findAllPage(skip, pageSize);
-        setRedis(hashRedis, JSON.stringify(result));
+        // setRedis(hashRedis, JSON.stringify(result));
         return result;
     }
 

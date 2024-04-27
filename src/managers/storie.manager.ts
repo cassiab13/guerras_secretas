@@ -1,48 +1,56 @@
-import { Storie } from 'src/types/storie.types';
+import { SaveCreatorHandler } from '../handlers/save-creator.handler';
+import { Manager } from './manager';
+import { Serie } from '../types/serie.types';
+import { SaveCharacterHandler } from '../handlers/save-character.handler';
+import { SaveEventHandler } from '../handlers/save-event.handler';
+import { CollectionURI } from '../dto/external/collection-uri.dto';
+import { ResponseAPI } from '../dto/external/response-api.dto';
+import { Request } from '../utils/request.utils';
+import { StorieAdapter } from '../adapter/storie.adapter';
+import { StorieCaching } from './caching/storie.caching';
 import { StorieRepository } from '../repository/storie.repository';
+import { StorieExternal } from '../dto/external/storie-external.dto';
+import { Storie } from '../types/storie.types';
+import { SaveSerieHandler } from '../handlers/save-serie.handler';
+import { SaveComicHandler } from '../handlers/save-comic.handler';
 
-export class StorieManager {
-    
-    private static instance: StorieManager | null = null;
-    private static storieById: Map<number, Storie> = new Map();
-    private static readonly repository: StorieRepository = new StorieRepository();
-    
-    public static getInstance(): StorieManager {
+export class StorieManager implements Manager {
 
-        if(!StorieManager.instance) {
-            StorieManager.instance = new StorieManager();
-        }
+    private readonly storieAdapter: StorieAdapter = new StorieAdapter();
+    private readonly storieCaching: StorieCaching = StorieCaching.getInstance();
+    private readonly storieRepository: StorieRepository = new StorieRepository();
 
-        return StorieManager.instance;
-    }
+    public async save(serie: Serie): Promise<void> {
 
-    public async findStorie(storie: Storie): Promise<Storie> {
-        
-        if (StorieManager.storieById.has(storie.id)) {
-            return StorieManager.storieById.get(storie.id)!;
-        }
+        console.time('storie')
+        const response: ResponseAPI<StorieExternal>[] = await Request.findByCollection(serie.stories as CollectionURI);
+        const allStories: StorieExternal[] = response.flatMap(response => response.data.results);
 
-        return this.saveStorie(storie);
-    }
-    
-    private async saveStorie(storie: Storie): Promise<Storie> {
-        
-        const newStorie: Storie = await StorieManager.repository.create(storie);
-        StorieManager.storieById.set(newStorie.id, newStorie);
-        
-        return newStorie; 
-    }
+        const newStories: Storie[] = [];
+        await Promise.all(allStories.map(async (externalCharacter: StorieExternal) => {
 
-    private async populateUriByObjectId(): Promise<void> {
+            const storie: Storie = await this.storieAdapter.toInternalSave(externalCharacter);
+            const newStorie: Storie = await this.storieCaching.findStorie(storie);
+            
+            const saveCreator: SaveCreatorHandler = new SaveCreatorHandler(newStorie, externalCharacter.creators as CollectionURI);
+            const saveCharacter: SaveCharacterHandler = new SaveCharacterHandler(newStorie, externalCharacter.characters as CollectionURI);
+            const saveSerie: SaveSerieHandler = new SaveSerieHandler(newStorie, externalCharacter.series as CollectionURI);
+            const saveComic: SaveComicHandler = new SaveComicHandler(newStorie, externalCharacter.comics as CollectionURI);
+            const saveEvent: SaveEventHandler = new SaveEventHandler(newStorie, externalCharacter.events as CollectionURI);
 
-        const stories: Storie[] = await StorieManager.repository.findAll();
-        stories.map(storie => {
-            StorieManager.storieById.set(storie.id, storie);
-        });
-    }
+            saveCreator.setNext(saveCharacter);
+            saveCharacter.setNext(saveSerie);
+            saveSerie.setNext(saveComic);
+            saveComic.setNext(saveEvent);
 
-    private constructor() {
-        this.populateUriByObjectId();
+            await saveCreator.save();
+            newStories.push(newStorie);
+
+        }));
+
+        this.storieRepository.createAll(newStories);
+        console.timeEnd('storie');
+
     }
 
 }

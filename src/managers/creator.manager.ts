@@ -1,48 +1,53 @@
-import { Creator } from '../types/creator.types';
+import { Manager } from './manager';
+import { Serie } from '../types/serie.types';
+import { SaveStorieHandler } from '../handlers/save-storie.handler';
+import { SaveEventHandler } from '../handlers/save-event.handler';
+import { CollectionURI } from '../dto/external/collection-uri.dto';
+import { ResponseAPI } from '../dto/external/response-api.dto';
+import { Request } from '../utils/request.utils';
+import { CreatorAdapter } from '../adapter/creator.adapter';
+import { CreatorCaching } from './caching/creator.caching';
 import { CreatorRepository } from '../repository/creator.repository';
+import { CreatorExternal } from '../dto/external/creator-external.dto';
+import { Creator } from '../types/creator.types';
+import { SaveSerieHandler } from '../handlers/save-serie.handler';
+import { SaveComicHandler } from '../handlers/save-comic.handler';
 
-export class CreatorManager {
+export class CreatorManager implements Manager {
 
-    private static instance: CreatorManager | null = null;
-    private static creatorById: Map<number, Creator> = new Map();
-    private static readonly repository: CreatorRepository = new CreatorRepository();
-    
-    public static getInstance(): CreatorManager {
+    private readonly creatorAdapter: CreatorAdapter = new CreatorAdapter();
+    private readonly creatorCaching: CreatorCaching = CreatorCaching.getInstance();
+    private readonly creatorRepository: CreatorRepository = new CreatorRepository();
 
-        if(!CreatorManager.instance) {
-            CreatorManager.instance = new CreatorManager();
-        }
+    public async save(serie: Serie): Promise<void> {
 
-        return CreatorManager.instance;
-    }
+        console.time('creator');
+        const response: ResponseAPI<CreatorExternal>[] = await Request.findByCollection(serie.creators as CollectionURI);
+        const allCreators: CreatorExternal[] = response.flatMap(response => response.data.results);
 
-    public async findCreator(creator: Creator): Promise<Creator> {
-        
-        if (CreatorManager.creatorById.has(creator.id)) {
-            return CreatorManager.creatorById.get(creator.id)!;
-        }
+        const newCreators: Creator[] = [];
+        await Promise.all(allCreators.map(async (creatorExternal: CreatorExternal) => {
 
-        return this.saveCreator(creator); 
-    }
+            const creator: Creator = await this.creatorAdapter.toInternalSave(creatorExternal);
+            const newCreator: Creator = await this.creatorCaching.findCreator(creator);
+            
+            const saveSerie: SaveSerieHandler = new SaveSerieHandler(newCreator, creatorExternal.series as CollectionURI);
+            const saveStorie: SaveStorieHandler = new SaveStorieHandler(newCreator, creatorExternal.stories as CollectionURI);
+            const saveEvent: SaveEventHandler = new SaveEventHandler(newCreator, creatorExternal.events as CollectionURI);
+            const saveComic: SaveComicHandler = new SaveComicHandler(newCreator, creatorExternal.comics as CollectionURI);
 
-    private async saveCreator(creator: Creator): Promise<Creator> {
-        
-        const newCreator: Creator = await CreatorManager.repository.create(creator);
-        CreatorManager.creatorById.set(creator.id, newCreator);
-        
-        return newCreator;
-    }
+            saveSerie.setNext(saveStorie);
+            saveStorie.setNext(saveEvent);
+            saveEvent.setNext(saveComic);
 
-    private async populateUriByObjectId(): Promise<void> {
+            await saveSerie.save();
+            newCreators.push(newCreator);
 
-        const creators: Creator[] = await CreatorManager.repository.findAll();
-        creators.map(creator => {
-            CreatorManager.creatorById.set(creator.id, creator);
-        });
-    }
+        }));
 
-    private constructor() {
-        this.populateUriByObjectId();
+        this.creatorRepository.createAll(newCreators);
+        console.timeEnd('creator');
+
     }
 
 }

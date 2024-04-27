@@ -9,7 +9,12 @@
     "mongoose": "^8.3.1"
   },
   "scripts": {
-    "start": "nodemon ./index.ts",
+    "start": "npm run start:docker && npm run start:app ",
+    "start:app": "nodemon ./index.ts",
+    "start:docker": "docker-compose up -d",
+    "stop": "npm run stop:docker && npm run stop:app",
+    "stop:docker": "docker-compose down",
+    "stop:app": "killall nodemon",
     "test": "jest",
     "cannon": "npx autocannon -c 500 -d 20 --workers 10 --renderStatusCode --latency --debug --warmup [ -c 1 -d 2 ] http://localhost:3000/comics"
   },
