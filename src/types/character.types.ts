@@ -1,4 +1,4 @@
-import { CollectionURI } from 'dto/external/collection-uri.dto';
+import { CollectionURI } from '../dto/external/collection-uri.dto';
 import { Image } from "./image.types";
 import { Serie } from "./serie.types";
 import { Comic } from "./comic.types";

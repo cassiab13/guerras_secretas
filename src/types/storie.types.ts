@@ -4,7 +4,7 @@ import { Character } from "./character.types";
 import { Creator } from "./creator.types";
 import { Comic } from './comic.types';
 import { Event } from './event.types';
-import { CollectionURI } from "dto/external/collection-uri.dto";
+import { CollectionURI } from "../dto/external/collection-uri.dto";
 
 export interface Storie {
   id: number;

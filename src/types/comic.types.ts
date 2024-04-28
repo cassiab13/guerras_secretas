@@ -7,7 +7,7 @@ import { Serie } from "./serie.types";
 import { Image } from "./image.types";
 import { Event } from "./event.types";
 import { ComicText } from "./comit-text.types";
-import { CollectionURI } from 'dto/external/collection-uri.dto';
+import { CollectionURI } from '../dto/external/collection-uri.dto';
 
 export interface Comic {
   id: number;

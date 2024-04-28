@@ -3,7 +3,7 @@ import { Serie } from "./serie.types";
 import { Storie } from "./storie.types";
 import { Comic } from "./comic.types";
 import { Event } from "./event.types";
-import { CollectionURI } from "dto/external/collection-uri.dto";
+import { CollectionURI } from "../dto/external/collection-uri.dto";
 
 export interface Creator {
   id: number;
