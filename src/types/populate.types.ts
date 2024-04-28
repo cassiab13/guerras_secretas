@@ -7,4 +7,3 @@ export interface Populate {
     stories: boolean;
     events: boolean;
 }
-  

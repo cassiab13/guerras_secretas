@@ -3,12 +3,12 @@ import { Populate } from "../types/populate.types";
 
 const populateSchema = new Schema(
     {
-        idSerie: { type: Number },
-        comics: Boolean,
-        characters: Boolean,
-        creators: Boolean,
-        stories: Boolean,
-        events: Boolean
+      idSerie: { type: String },
+      comics: { type: Boolean, default: false },
+      characters: { type: Boolean, default: false },
+      creators: { type: Boolean, default: false },
+      stories: { type: Boolean, default: false },
+      events: { type: Boolean, default: false }
     },
     {
       timestamps: true,

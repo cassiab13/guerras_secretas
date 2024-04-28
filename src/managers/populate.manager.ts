@@ -30,13 +30,16 @@ export class PopulateManager {
 
     private async updateFieldsBySerie(idSerie: string, serie: Serie, updates: any) {
 
-        let populate: Populate = await this.getPopulate(idSerie);
+        let populate: any = await this.getPopulate(idSerie);
 
         for (const key of Object.keys(updates)) {
-            if (updates[key] && populate[key as keyof Populate]) {
-                populate = { ...populate, [key]: true };
+
+            if (updates[key] && !populate[key]) {
+                populate[key] = true;
+                console.log(populate);
                 this.strategies[key].save(serie);
             }
+
         }
 
         this.repository.create(populate);
@@ -49,14 +52,7 @@ export class PopulateManager {
             return populate;
         }
 
-        return {
-            idSerie: idSerie,
-            comics: false,
-            characters: false,
-            creators: false,
-            stories: false,
-            events: false
-        }
+        return await this.repository.create({ idSerie: idSerie } as Populate);
     }
 
 }
