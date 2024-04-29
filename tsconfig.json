@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "declaration": true,
+        "composite": true,
+        "emitDeclarationOnly": true,
         "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
+        "allowImportingTsExtensions": true,
         "target": "es2016",
         "sourceMap": true,
         "outDir": "./dist",
@@ -15,7 +17,6 @@
         "strictNullChecks": true,
         "strict": true,
         "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true
     }
 }

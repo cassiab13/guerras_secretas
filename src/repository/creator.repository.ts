@@ -1,24 +1,17 @@
-import { Model } from "mongoose";
-import creatorModel from "../schema/creator.schema";
-import { Creator } from "src/types/creator.types";
+import { Model } from 'mongoose';
+import { Creator } from 'src/types/creator.types';
+import { CrudRepository } from './crud.repository';
 
-export class CreatorRepository {
-  private readonly creatorModel: Model<Creator>;
+export class CreatorRepository extends CrudRepository<Creator> {
+    constructor(model: Model<Creator>) {
+        super(model);
+    }
 
-  constructor() {
-    this.creatorModel = creatorModel;
-  }
+    public async create(creator: Creator): Promise<Creator> {
+        return this.model.create(creator);
+    }
 
-  public async create(creator: Creator): Promise<Creator> {
-    return this.creatorModel.create(creator);
-  }
-
-  public async findAll(): Promise<Creator[]> {
-    return creatorModel.find();
-  }
-
-  public async createAll(creators: Creator[]): Promise<void> {
-    await this.creatorModel.create(creators);
-  }
-  
+    public async createAll(creators: Creator[]): Promise<void> {
+        await this.model.create(creators);
+    }
 }
