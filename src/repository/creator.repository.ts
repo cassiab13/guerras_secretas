@@ -1,6 +1,7 @@
 import { Model } from 'mongoose';
-import { Creator } from 'src/types/creator.types';
+import { Creator } from '../types/creator.types';
 import { CrudRepository } from './crud.repository';
+import { Comic } from '../types/comic.types';
 
 export class CreatorRepository extends CrudRepository<Creator> {
     constructor(model: Model<Creator>) {
@@ -13,5 +14,14 @@ export class CreatorRepository extends CrudRepository<Creator> {
 
     public async createAll(creators: Creator[]): Promise<void> {
         await this.model.create(creators);
+    }
+
+    public async findComicsByCreator(id: string): Promise<Comic[] | null> {
+        return this.model.findById(id, { comics: 1 }).populate('comics');
+    }
+    public async findCreatorsByRole(role: string): Promise<Creator[]> {
+        return await this.model
+            .find({ role }, { firstName: 1 })
+            .populate('creator');
     }
 }

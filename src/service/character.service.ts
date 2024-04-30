@@ -1,7 +1,7 @@
 import { CharacterRepository } from 'src/repository/character.repository';
 import { CrudService } from './crud.service';
-import { Character } from 'src/types/character.types';
-import { Comic } from 'src/types/comic.types';
+import { Character } from '../types/character.types';
+import { Comic } from '../types/comic.types';
 
 export class CharacterService extends CrudService<Character> {
     constructor(repository: CharacterRepository) {

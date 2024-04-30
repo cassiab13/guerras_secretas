@@ -32,7 +32,7 @@ characterRoutes.delete(
     characterController.delete.bind(characterController)
 );
 characterRoutes.get(
-    '/findComics/:id',
+    '/find/comics/:id',
     characterController.findComicsByCharacter.bind(characterController)
 );
 

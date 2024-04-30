@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { Character } from '../types/character.types';
 import { CrudRepository } from './crud.repository';
-import { Comic } from 'src/types/comic.types';
+import { Comic } from '../types/comic.types';
 
 export class CharacterRepository extends CrudRepository<Character> {
     constructor(model: Model<Character>) {

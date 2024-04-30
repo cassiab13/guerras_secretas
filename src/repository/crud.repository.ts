@@ -1,8 +1,9 @@
-import { Document, FilterQuery, Model, UpdateQuery } from "mongoose";
-import { ICrudRepository } from "src/interfaces/crud.repository";
+import { FilterQuery, Model, UpdateQuery } from 'mongoose';
+import { ICrudRepository } from 'src/interfaces/crud.repository';
 
-export abstract class CrudRepository<Entity> implements ICrudRepository<Entity> {
-
+export abstract class CrudRepository<Entity>
+    implements ICrudRepository<Entity>
+{
     protected readonly model: Model<Entity>;
 
     constructor(model: Model<Entity>) {
@@ -14,10 +15,9 @@ export abstract class CrudRepository<Entity> implements ICrudRepository<Entity> 
     }
 
     public async update(id: string, data: Entity): Promise<void> {
-        
         await this.model.updateOne(
-        { _id: id } as FilterQuery<Entity>,
-        data as unknown as UpdateQuery<Entity>
+            { _id: id } as FilterQuery<Entity>,
+            data as unknown as UpdateQuery<Entity>
         );
     }
 
@@ -34,7 +34,6 @@ export abstract class CrudRepository<Entity> implements ICrudRepository<Entity> 
     }
 
     public async findAllPage(skip: number, limit: number): Promise<Entity[]> {
-      return this.model.find().skip(skip).limit(limit);
+        return this.model.find().skip(skip).limit(limit);
     }
-
 }

@@ -1,5 +1,4 @@
 export interface ICrudRepository<Entity> {
-
     findAll(): Promise<Entity[]>;
 
     findAllPage(skip: number, limit: number): Promise<Entity[]>;
@@ -11,5 +10,4 @@ export interface ICrudRepository<Entity> {
     update(id: string, data: Entity): Promise<void>;
 
     delete(id: string): Promise<void>;
-
 }
