@@ -4,18 +4,13 @@ Salvar revistas
 
 Verificar uma forma para não duplicar os dados
 
-Revistas:
-Retornar as revistas ordenadas por preço
-Retornar as revistas de um criador específico
-
-Ok Personagens:
-Retornar as revistas que ele apareceu
-
-Criadores:
-Retornar criadores por papel - Tem que salvar a role - mas já tenho uma ideia 
-
 5. Rotas Auxiliares: Deverão ser criadas pelo menos 5 rotas auxiliares para complementar a funcionalidade de sua aplicação. O que cada rota irá fazer fica a seu critério.
 Exemplos: Rota para listar somente os roteiristas, uma rota para buscar todas as personagens do sexo feminino de determinada sagas, uma rota para contar o total de revistas de derminada saga, e assim por diante.
+OK Retornar as revistas de um criador específico
+Ok Retornar as revistas que um personagem apareceu
+OK Retornar os eventos que um personagem participou
+OK Retornar a thumbnail de um personagem
+
 
 6. Desenvolvimento de Testes:
 Testes Automatizados: Escreva testes unitários e de integração para garantir o correto funcionamento das operações CRUD e da lógica de negócios da sua API.

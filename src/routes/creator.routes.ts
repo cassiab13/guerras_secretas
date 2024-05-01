@@ -20,12 +20,8 @@ creatorRoutes.get('/:id', creatorController.findById.bind(creatorController));
 creatorRoutes.put('/:id', creatorController.update.bind(creatorController));
 creatorRoutes.delete('/:id', creatorController.delete.bind(creatorController));
 creatorRoutes.get(
-    '/:role',
-    creatorController.findCreatorsByRole.bind(creatorController)
-);
-creatorRoutes.get(
-    '/find/:id',
-    creatorController.findById.bind(creatorController)
+    '/:id/comics',
+    creatorController.findComicsByCreator.bind(creatorController)
 );
 
 export { creatorRoutes };

@@ -17,11 +17,8 @@ export class CreatorRepository extends CrudRepository<Creator> {
     }
 
     public async findComicsByCreator(id: string): Promise<Comic[] | null> {
-        return this.model.findById(id, { comics: 1 }).populate('comics');
-    }
-    public async findCreatorsByRole(role: string): Promise<Creator[]> {
-        return await this.model
-            .find({ role }, { firstName: 1 })
-            .populate('creator');
+        return this.model
+            .findById(id, { comics: 1, _id: 0 })
+            .populate('comics');
     }
 }
