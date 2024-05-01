@@ -24,6 +24,10 @@ export class CharacterCaching {
         return this.saveCharacter(character);
     }
 
+    public clear() {
+        CharacterCaching.characterById = new Map();
+    }
+
     private async saveCharacter(character: Character): Promise<Character> {
         const newCharacter: Character =
             await CharacterCaching.repository.create(character);
@@ -43,4 +47,5 @@ export class CharacterCaching {
     private constructor() {
         this.populateUriByObjectId();
     }
+
 }

@@ -1,7 +1,9 @@
+import { Find } from "../utils/find.utils";
+
 export interface ICrudRepository<Entity> {
     findAll(): Promise<Entity[]>;
 
-    findAllPage(skip: number, limit: number): Promise<Entity[]>;
+    findAllPage(find: Find): Promise<Entity[]>;
 
     findById(id: string): Promise<Entity | null>;
 

@@ -5,7 +5,7 @@ import { ComicService } from "src/service/comic.service";
 export class ComicController extends CrudController<Comic> {
 
     constructor(service: ComicService) {
-        super(service);
+        super(service); 
     }
 
 }

@@ -17,6 +17,10 @@ export class ComicCaching {
         return ComicCaching.instance;
     }
 
+    public clear() {
+        ComicCaching.comicById = new Map();
+    }
+
     public async findComic(comic: Comic): Promise<Comic> {
         
         if (ComicCaching.comicById.has(comic.id)) {

@@ -24,6 +24,10 @@ export class EventCaching {
 
         return this.saveEvent(event);
     }
+
+    public clear() {
+        EventCaching.eventById = new Map();
+    }
     
     private async saveEvent(event: Event): Promise<Event> {
         

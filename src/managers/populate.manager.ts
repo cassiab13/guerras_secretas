@@ -8,6 +8,13 @@ import { Manager } from "./manager";
 import { SerieManager } from "./serie.manager";
 import { StorieManager } from "./storie.manager";
 import { Populate } from '../types/populate.types';
+import { CharacterCaching } from "./caching/character.caching";
+import { ComicCaching } from "./caching/comic.caching";
+import { CreatorCaching } from "./caching/creator.caching";
+import { EventCaching } from "./caching/event.caching";
+import { SerieCaching } from "./caching/serie.caching";
+import { StorieCaching } from "./caching/storie.caching";
+import { deleteAll } from "../../redisConfig";
 
 export class PopulateManager {
 
@@ -22,10 +29,12 @@ export class PopulateManager {
     };
 
     public async saveSerie(idSerie: string, updates: any) {
-        console.time('Time')
+        console.time('Populate');
         const serie: Serie = await this.serieManager.save(idSerie);
         await this.updateFieldsBySerie(idSerie, serie, updates);
-        console.timeEnd('Time')
+        this.clearCache();
+        deleteAll();
+        console.timeEnd('Populate');
     }
 
     private async updateFieldsBySerie(idSerie: string, serie: Serie, updates: any) {
@@ -53,6 +62,15 @@ export class PopulateManager {
         }
 
         return await this.repository.create({ idSerie: idSerie } as Populate);
+    }
+
+    private clearCache(): void {
+        CharacterCaching.getInstance().clear();
+        ComicCaching.getInstance().clear();
+        CreatorCaching.getInstance().clear();
+        EventCaching.getInstance().clear();
+        SerieCaching.getInstance().clear();
+        StorieCaching.getInstance().clear();
     }
 
 }

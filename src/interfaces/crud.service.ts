@@ -1,6 +1,9 @@
+import { ResponseApi } from "../types/response-api.types";
+import { Find } from "../utils/find.utils";
+
 export interface ICrudService<Entity> {
 
-    findAll(page: number, pageSize: number): Promise<Entity[]>;
+    findAll(find: Find): Promise<ResponseApi<Entity[]>>;
 
     find(id: string): Promise<Entity>;
     

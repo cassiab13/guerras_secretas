@@ -24,7 +24,11 @@ export class StorieCaching {
 
         return this.saveStorie(storie);
     }
-    
+
+    public clear() {
+        StorieCaching.storieById = new Map();
+    }
+
     private async saveStorie(storie: Storie): Promise<Storie> {
         
         const newStorie: Storie = await StorieCaching.repository.create(storie);

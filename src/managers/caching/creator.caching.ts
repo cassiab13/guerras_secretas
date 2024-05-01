@@ -24,6 +24,10 @@ export class CreatorCaching {
         return this.saveCreator(creator);
     }
 
+    public clear() {
+        CreatorCaching.creatorById = new Map();
+    }
+
     private async saveCreator(creator: Creator): Promise<Creator> {
         const newCreator: Creator = await CreatorCaching.repository.create(
             creator

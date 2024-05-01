@@ -30,12 +30,7 @@ export class CharacterRepository extends CrudRepository<Character> {
     }
 
     public async findThumbnail(id: string): Promise<Character[] | null> {
-        console.log(
-            this.model.findById(id, {
-                thumbnail: 1,
-                _id: 0
-            })
-        );
+        
         return await this.model.findById(id, {
             thumbnail: 1,
             _id: 0

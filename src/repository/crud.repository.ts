@@ -1,5 +1,6 @@
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { ICrudRepository } from 'src/interfaces/crud.repository';
+import { Find } from '../utils/find.utils';
 
 export abstract class CrudRepository<Entity>
     implements ICrudRepository<Entity>
@@ -33,7 +34,13 @@ export abstract class CrudRepository<Entity>
         return this.model.find();
     }
 
-    public async findAllPage(skip: number, limit: number): Promise<Entity[]> {
-        return this.model.find().skip(skip).limit(limit);
+    public async findAllPage(find: Find): Promise<Entity[]> {
+
+        return this.model
+            .find(find.filter, find.project)
+            .sort(find.sort)
+            .populate(find.populate)
+            .skip(find.skip)
+            .limit(find.pageSize);
     }
 }

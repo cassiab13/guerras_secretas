@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { StatusCode } from "../enums/status.code";
 import { ICrudController } from "../interfaces/crud.controller";
 import { ICrudService } from "../interfaces/crud.service";
+import { Find } from "../utils/find.utils";
+import { ResponseApi } from "../types/response-api.types";
 
 export abstract class CrudController<Entity> implements ICrudController {
     
@@ -48,11 +50,10 @@ export abstract class CrudController<Entity> implements ICrudController {
     }
 
     public async findAll(req: Request, res: Response): Promise<void> {
+    
+        const find: Find = new Find(req.query);
 
-        const page: number = parseInt(req.query.page as string, 10) || 1;
-        const pageSize: number = parseInt(req.query.pageSize as string, 10) || 10;
-
-        const values: Entity[] = await this.crudService.findAll(page, pageSize);
+        const values: ResponseApi<Entity[]> = await this.crudService.findAll(find);
         res.status(StatusCode.SUCCESS).json(values);
     }
 

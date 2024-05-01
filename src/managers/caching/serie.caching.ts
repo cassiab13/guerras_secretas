@@ -24,6 +24,10 @@ export class SerieCaching {
 
         return this.save(serie);
     }
+
+    public clear() {
+        SerieCaching.serieById = new Map();
+    }
     
     private async save(serie: Serie): Promise<Serie> {
         

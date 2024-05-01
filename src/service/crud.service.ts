@@ -3,7 +3,9 @@ import { StatusCode } from "../enums/status.code";
 import { ICrudRepository } from "../interfaces/crud.repository";
 import { ICrudService } from "../interfaces/crud.service";
 import { NotFoundError } from "../utils/errors/not-found.error";
-import { getRedis, setRedis } from "../../redisConfig";
+import { deleteAll, getRedis, setRedis } from "../../redisConfig";
+import { Find } from "../utils/find.utils";
+import { ResponseApi } from "../types/response-api.types";
 
 export abstract class CrudService<Entity> implements ICrudService<Entity> {
   
@@ -14,14 +16,16 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
     }
 
     public async create(data: Entity): Promise<void> {
+        
         this.repository.create(data);
+        deleteAll();
     }
     
     public async update(id: string, data: Entity): Promise<void> {
 
         await this.findById(id);
         this.repository.update(id, data);
-
+        deleteAll();
     }
 
     public async delete(id: string): Promise<void> {
@@ -32,19 +36,31 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
         return this.findById(id);
     }
   
-    public async findAll(page: number, pageSize: number): Promise<Entity[]> {
+    public async findAll(find: Find): Promise<ResponseApi<Entity[]>> {
         
-        const skip = (page - 1) * pageSize;
-        // const hashRedis: string = KeyRedis.findPage(this.getClassName(), skip, pageSize);
-        // const value: string | null | undefined = await getRedis(hashRedis);
+        const hashRedis: string = KeyRedis.findPage(this.getClassName(), find);
+        const value: string | null | undefined = await getRedis(hashRedis);
 
-        // if (value && JSON.parse(value).length !== 0) {
-        //     return JSON.parse(value);
-        // }
+        if (value && JSON.parse(value).length !== 0) {
+            return this.generateResponse(JSON.parse(value), find);
+        }
 
-        const result: Entity[] = await this.repository.findAllPage(skip, pageSize);
-        // setRedis(hashRedis, JSON.stringify(result));
-        return result;
+        const result: Entity[] = await this.repository.findAllPage(find);
+        setRedis(hashRedis, JSON.stringify(result));
+        return this.generateResponse(result, find);
+        
+    }
+
+    private generateResponse(result: Entity[], find: Find) {
+        
+        return {
+            statusCode: StatusCode.SUCCESS,
+            pagination: {
+                perPage: find.pageSize,
+                currentPage: find.page
+            },
+            data: result
+        }
     }
 
     private async findById(id: string): Promise<Entity> {
