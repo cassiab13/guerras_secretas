@@ -17,7 +17,22 @@ export class CharacterController extends CrudController<Character> {
         res: Response
     ): Promise<void> {
         const id = req.params.id;
-        this.characterService.findComicsByCharacter(id);
-        res.status(StatusCode.SUCCESS).json();
+        const comics = await this.characterService.findComicsByCharacter(id);
+        res.status(StatusCode.SUCCESS).json(comics);
+    }
+
+    public async findSeriesByCharacter(
+        req: Request,
+        res: Response
+    ): Promise<void> {
+        const id = req.params.id;
+        const series = await this.characterService.findSeriesByCharacter(id);
+        res.status(StatusCode.SUCCESS).json(series);
+    }
+
+    public async findThumbnail(req: Request, res: Response): Promise<void>{
+        const id = req.params.id;
+        const thumbnail = await this.characterService.findThumbnail(id);
+        res.status(StatusCode.SUCCESS).json(thumbnail);
     }
 }

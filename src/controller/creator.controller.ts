@@ -5,9 +5,10 @@ import { Creator } from '../types/creator.types';
 import { StatusCode } from '../enums/status.code';
 
 export class CreatorController extends CrudController<Creator> {
-    private readonly creatorService: any;
+    private readonly creatorService: CreatorService;
     constructor(service: CreatorService) {
         super(service);
+        this.creatorService = service;
     }
 
     public async findComicsByCreator(
@@ -15,16 +16,7 @@ export class CreatorController extends CrudController<Creator> {
         res: Response
     ): Promise<void> {
         const id = req.params.id;
-        this.creatorService.findComicsByCreator(id);
-        res.status(StatusCode.SUCCESS).json();
-    }
-
-    public async findCreatorsByRole(
-        req: Request,
-        res: Response
-    ): Promise<void> {
-        const role = req.params.role;
-        this.creatorService.findCreatorByRole(role);
-        res.status(StatusCode.SUCCESS).json();
+        const comics = await this.creatorService.findComicsByCreator(id);
+        res.status(StatusCode.SUCCESS).json(comics);
     }
 }
