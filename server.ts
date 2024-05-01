@@ -1,3 +1,4 @@
+import { InsertDataDefault } from './insert-data-default';
 import app from './app';
 
 require('dotenv').config();
@@ -9,6 +10,7 @@ function main() {
     app.listen(PORT, API_HOST, () => {
         console.log(`Server running at port ${PORT}`);
     });
+    new InsertDataDefault().insert();
 }
 
 main();
