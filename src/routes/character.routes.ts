@@ -3,7 +3,8 @@ import characterModel from '../schema/character.schema';
 import { CharacterService } from './../service/character.service';
 import { CharacterRepository } from './../repository/character.repository';
 import { CharacterController } from './../controller/character.controller';
-import { validateCharacterCreation } from '../middlewares/validate-creation';
+import { Validate } from '../middlewares/validate';
+import { createCharacterDTO } from '../dto/create.character.dto';
 
 const characterRoutes = Router();
 
@@ -18,11 +19,7 @@ const characterController: CharacterController = new CharacterController(
 );
 
 characterRoutes.get('', characterController.findAll.bind(characterController));
-characterRoutes.post(
-    '',
-    validateCharacterCreation,
-    characterController.create.bind(characterController)
-);
+characterRoutes.post('', (req, res, next) => Validate.body(req, res, next, createCharacterDTO), characterController.create.bind(characterController));
 characterRoutes.get(
     '/:id',
     characterController.findById.bind(characterController)
