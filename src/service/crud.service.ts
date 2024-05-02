@@ -16,7 +16,7 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
     }
 
     public async create(data: Entity): Promise<void> {
-        
+
         this.repository.create(data);
         deleteAll();
     }
@@ -51,7 +51,7 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
         
     }
 
-    private generateResponse(result: Entity[], find: Find) {
+    private generateResponse(result: Entity[], find: Find): ResponseApi<Entity[]> {
         
         return {
             statusCode: StatusCode.SUCCESS,
