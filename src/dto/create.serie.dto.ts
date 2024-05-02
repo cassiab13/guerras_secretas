@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('joi-oid');
 
 const CreateSerieDTO = Joi.object({
     id: Joi.number(),

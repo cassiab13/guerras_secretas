@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('joi-oid');
 
 const CreateEventDTO = Joi.object({
     id: Joi.number(),
