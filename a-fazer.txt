@@ -1,8 +1,8 @@
-Salvar criadores 
-Salvar personagens
-Salvar revistas
+OK Salvar criadores 
+OK Salvar personagens
+OK Salvar revistas
 
-Verificar uma forma para não duplicar os dados
+OK Verificar uma forma para não duplicar os dados
 
 5. Rotas Auxiliares: Deverão ser criadas pelo menos 5 rotas auxiliares para complementar a funcionalidade de sua aplicação. O que cada rota irá fazer fica a seu critério.
 Exemplos: Rota para listar somente os roteiristas, uma rota para buscar todas as personagens do sexo feminino de determinada sagas, uma rota para contar o total de revistas de derminada saga, e assim por diante.

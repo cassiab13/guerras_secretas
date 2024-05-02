@@ -1,6 +1,6 @@
-const Joi = require('joi');
+const Joi = require('joi-oid');
 
-const CreateCreatorDTO = Joi.object({
+const createCreatorDTO = Joi.object({
     id: Joi.number(),
     firstName: Joi.string().required(),
     middleName: Joi.string(),
@@ -19,4 +19,4 @@ const CreateCreatorDTO = Joi.object({
     series: Joi.array().items(Joi.objectId()).default([])
 });
 
-export { CreateCreatorDTO };
+export { createCreatorDTO };
