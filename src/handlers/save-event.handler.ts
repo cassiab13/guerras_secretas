@@ -1,4 +1,3 @@
-import { Serie } from "../types/serie.types";
 import { EventAdapter } from "../adapter/event.adapter";
 import { EventExternal } from "../dto/external/event-external.dto";
 import { ResponseAPI } from "../dto/external/response-api.dto";
@@ -13,11 +12,11 @@ export class SaveEventHandler implements SaveHandler {
     private nextHandler: SaveHandler | null = null;
     private eventAdapter: EventAdapter = new EventAdapter();
     private eventCaching: EventCaching = EventCaching.getInstance();
-    private toUpdate: any;
+    private entity: any;
     private collectionUri: CollectionURI;
 
-    constructor(toUpdate: any, collectionUri: CollectionURI) {
-        this.toUpdate = toUpdate;
+    constructor(entity: any, collectionUri: CollectionURI) {
+        this.entity = entity;
         this.collectionUri = collectionUri;
     }
 
@@ -29,20 +28,20 @@ export class SaveEventHandler implements SaveHandler {
     public async save(): Promise<any> {
 
         const response: ResponseAPI<EventExternal>[] = await Request.findByCollection(this.collectionUri);
-        await this.filterEvents(this.toUpdate, response);
+        await this.filterEvents(this.entity, response);
 
         if (this.nextHandler) {
             return this.nextHandler.save();
         }
 
-        return this.toUpdate;
+        return this.entity;
 
     }
 
     private async filterEvents(type: any, response: ResponseAPI<EventExternal>[]): Promise<void> {
 
         type.events = [];
-        const allEvents: EventExternal[] = response.map(response => response.data?.results).flat();
+        const allEvents: EventExternal[] = response.flatMap(response => response.data?.results);
         const sizeEvents: number = allEvents.length;
         
         for (let i = 0; i < sizeEvents; i++) {
