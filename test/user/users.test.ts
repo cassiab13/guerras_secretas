@@ -109,7 +109,6 @@ describe('Users', () => {
 
             response = await request.get(`/users/${userId}`);
             result = await response.body;
-            console.log(result);
 
             expect(response.statusCode).toEqual(200);
             expect(result.username).toBe('user1234');
@@ -121,18 +120,18 @@ describe('Users', () => {
         it('should return deleted user', async () => {
             let responseUsers = await request.get('/users');
             let resultUsers = JSON.parse(responseUsers.text).data;
-            console.log(resultUsers);
             expect(resultUsers.length).toEqual(5);
             expect(responseUsers.statusCode).toEqual(200);
 
             const userId = (await getUsersIds())[0];
+            console.log(userId);
             let response = await request.delete(`/users/${userId}`);
-            console.log(response.body);
+            console.log('Delete', response.statusCode);
             expect(response.statusCode).toEqual(204);
 
             responseUsers = await request.get('/users');
-            resultUsers = await responseUsers.body;
-
+            resultUsers = await JSON.parse(responseUsers.text).data;
+            console.log('Após delete', resultUsers);
             expect(resultUsers.length).toEqual(4);
             expect(responseUsers.statusCode).toEqual(200);
         });
