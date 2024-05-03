@@ -46,7 +46,8 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
         return this.generateResponse(result, find);
     }
 
-    private generateResponse(result: Entity[], find: Find) {
+    private generateResponse(result: Entity[], find: Find): ResponseApi<Entity[]> {
+        
         return {
             statusCode: StatusCode.SUCCESS,
             pagination: {
