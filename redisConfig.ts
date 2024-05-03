@@ -13,9 +13,9 @@ function setRedis(key: string, value: string) {
     return syncRedisSet(key, value);
 }
 
-function deleteAll() {
+function deleteCacheRedis() {
     const syncRedisDel = promisify(redisClient.flushall).bind(redisClient);
     return syncRedisDel();
 }
 
-export { redisClient, getRedis, setRedis, deleteAll };
+export { redisClient, getRedis, setRedis, deleteCacheRedis };

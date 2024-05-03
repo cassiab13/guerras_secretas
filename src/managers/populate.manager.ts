@@ -14,10 +14,9 @@ import { CreatorCaching } from "./caching/creator.caching";
 import { EventCaching } from "./caching/event.caching";
 import { SerieCaching } from "./caching/serie.caching";
 import { StorieCaching } from "./caching/storie.caching";
-import { deleteAll } from "../../redisConfig";
+import { deleteCacheRedis } from '../../redisConfig';
 
 export class PopulateManager {
-
     private serieManager: SerieManager = new SerieManager();
     private readonly repository: PopulateRepository = new PopulateRepository();
     private strategies: { [key: string]: Manager } = {
@@ -35,25 +34,27 @@ export class PopulateManager {
         console.timeEnd('Populate');
     }
 
-    private async updateFieldsBySerie(idSerie: string, serie: Serie, updates: any) {
-
+    private async updateFieldsBySerie(
+        idSerie: string,
+        serie: Serie,
+        updates: any
+    ) {
         let populate: any = await this.getPopulate(idSerie);
 
         for (const key of Object.keys(updates)) {
-
             if (updates[key] && !populate[key]) {
                 populate[key] = true;
-                console.log(populate);
                 this.strategies[key].save(serie);
             }
-
         }
 
         this.repository.create(populate);
     }
 
     private async getPopulate(idSerie: string): Promise<Populate> {
-        const populate: Populate | null = await this.repository.findByIdSerie(idSerie);
+        const populate: Populate | null = await this.repository.findByIdSerie(
+            idSerie
+        );
 
         if (populate) {
             return populate;
@@ -69,6 +70,6 @@ export class PopulateManager {
         EventCaching.getInstance().clear();
         SerieCaching.getInstance().clear();
         StorieCaching.getInstance().clear();
+        deleteCacheRedis();
     }
-
 }

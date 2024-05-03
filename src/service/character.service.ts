@@ -1,4 +1,4 @@
-import { CharacterRepository } from 'src/repository/character.repository';
+import { CharacterRepository } from '../repository/character.repository';
 import { CrudService } from './crud.service';
 import { Character } from '../types/character.types';
 import { Comic } from '../types/comic.types';
