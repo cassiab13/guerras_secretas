@@ -32,8 +32,6 @@ export class PopulateManager {
         console.time('Populate');
         const serie: Serie = await this.serieManager.save(idSerie);
         await this.updateFieldsBySerie(idSerie, serie, updates);
-        this.clearCache();
-        deleteAll();
         console.timeEnd('Populate');
     }
 
