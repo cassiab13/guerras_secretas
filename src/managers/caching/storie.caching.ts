@@ -26,7 +26,7 @@ export class StorieCaching {
     }
 
     public clear() {
-        StorieCaching.storieById = new Map();
+        StorieCaching.storieById.clear();
     }
 
     private async saveStorie(storie: Storie): Promise<Storie> {

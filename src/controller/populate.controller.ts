@@ -15,7 +15,7 @@ export class PopulateController {
         const fields: string[] = ['comics', 'creators', 'characters', 'stories', 'events'];
         const updates: any = this.catchFieldsForUpdate(request.query, fields);
 
-        this.service.serie(id, updates);
+        await this.service.serie(id, updates);
 
         response.status(201).json();
 

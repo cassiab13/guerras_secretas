@@ -25,7 +25,7 @@ export class CreatorCaching {
     }
 
     public clear() {
-        CreatorCaching.creatorById = new Map();
+        CreatorCaching.creatorById.clear();
     }
 
     private async saveCreator(creator: Creator): Promise<Creator> {

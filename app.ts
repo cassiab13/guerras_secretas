@@ -37,11 +37,7 @@ class App {
     }
 
     private swagger(): void {
-        this.express.use(
-            '/api-docs',
-            swaggerUi.serve,
-            swaggerUi.setup(swaggerDocs)
-        );
+        this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     }
 }
 

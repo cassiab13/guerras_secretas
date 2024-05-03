@@ -1,6 +1,6 @@
 
 export interface Populate {
-    idSerie: string;
+    idSerie: number;
     comics: boolean;
     characters: boolean;
     creators: boolean;

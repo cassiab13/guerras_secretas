@@ -18,7 +18,7 @@ export class ComicCaching {
     }
 
     public clear() {
-        ComicCaching.comicById = new Map();
+        ComicCaching.comicById.clear();
     }
 
     public async findComic(comic: Comic): Promise<Comic> {

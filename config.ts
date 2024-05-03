@@ -5,8 +5,7 @@ require('dotenv').config();
 const dbHost = process.env.DB_HOST || 'localhost';
 const dbPort = process.env.DB_PORT || '27017';
 const dbName = process.env.DB_NAME;
-const marvel_api =
-    process.env.MARVEL_API || 'http://gateway.marvel.com/v1/public/';
+const marvel_api = process.env.MARVEL_API || 'http://gateway.marvel.com/v1/public/';
 const event = process.env.EVENT || 270;
 const ts = process.env.TS || 1;
 const privateKey = process.env.PRIVATE_KEY;
