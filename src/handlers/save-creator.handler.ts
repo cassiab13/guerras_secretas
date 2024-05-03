@@ -5,7 +5,7 @@ import { SaveHandler } from "./save.handler";
 import { Request } from "../utils/request.utils";
 import { ResponseAPI } from "../dto/external/response-api.dto";
 import { CreatorExternal } from '../dto/external/creator-external.dto';
-import { CollectionURI } from 'src/dto/external/collection-uri.dto';
+import { CollectionURI } from '../dto/external/collection-uri.dto';
 
 export class SaveCreatorHandler implements SaveHandler {
 

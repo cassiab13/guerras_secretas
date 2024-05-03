@@ -1,5 +1,5 @@
 import { FilterQuery, Model, UpdateQuery } from 'mongoose';
-import { ICrudRepository } from 'src/interfaces/crud.repository';
+import { ICrudRepository } from '../interfaces/crud.repository';
 import { Find } from '../utils/find.utils';
 
 export abstract class CrudRepository<Entity>

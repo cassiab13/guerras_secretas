@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { Comic } from "src/types/comic.types";
+import { Comic } from '../types/comic.types';
 import { CrudRepository } from "./crud.repository";
 
 export class ComicRepository extends CrudRepository<Comic> {

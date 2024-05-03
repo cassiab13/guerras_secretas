@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto';
+
 require('dotenv').config();
 
 const dbHost = process.env.DB_HOST || 'localhost';
@@ -10,6 +12,8 @@ const ts = process.env.TS || 1;
 const privateKey = process.env.PRIVATE_KEY;
 const publicKey = process.env.PUBLIC_KEY;
 const privateHash = process.env.PRIVATE_HASH;
+const randomName = randomUUID().slice(0, 4);
+const dbRandomName = `${randomName}-test`;
 
 const config = {
     dbName,
@@ -19,7 +23,8 @@ const config = {
     ts,
     privateKey,
     publicKey,
-    privateHash
+    privateHash,
+    dbRandomName
 };
 
 export default config;
