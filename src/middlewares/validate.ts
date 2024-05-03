@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { StatusCode } from 'src/enums/status.code';
+import { StatusCode } from '../enums/status.code';
 const Joi = require('joi-oid');
 
 export class Validate {

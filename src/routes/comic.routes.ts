@@ -3,7 +3,6 @@ import comicModel from '../schema/comic.schema';
 import { ComicRepository } from "../repository/comic.repository";
 import { ComicService } from "../service/comic.service";
 import { ComicController } from "../controller/comic.controller";
-import { Validate } from "../middlewares/validate";
 
 const comicRoutes = Router()
 
