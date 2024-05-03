@@ -1,14 +1,13 @@
-import { User } from "src/types/user.types";
-import { CrudService } from "./crud.service";
-import { Password } from "../utils/password.utils";
-import { UserRepository } from "../repository/user.repository";
-import { NotFoundError } from "../utils/errors/not-found.error";
-import { StatusCode } from "../enums/status.code";
-import { UnauthorizedError } from "../utils/errors/unauthorized.error";
-import { Token } from "../utils/token.utils";
+import { User } from '../types/user.types';
+import { CrudService } from './crud.service';
+import { Password } from '../utils/password.utils';
+import { UserRepository } from '../repository/user.repository';
+import { NotFoundError } from '../utils/errors/not-found.error';
+import { StatusCode } from '../enums/status.code';
+import { UnauthorizedError } from '../utils/errors/unauthorized.error';
+import { Token } from '../utils/token.utils';
 
 export class UserService extends CrudService<User> {
-
     protected readonly repository: UserRepository;
 
     constructor(repository: UserRepository) {
@@ -22,26 +21,27 @@ export class UserService extends CrudService<User> {
     }
 
     public async auth(data: User): Promise<string> {
-
         const user: User = await this.findByEmailOrUsername(data);
 
         if (!Password.verify(user.password, data.password)) {
-            throw new UnauthorizedError("User not authorized", StatusCode.UNAUTHORIZED);
+            throw new UnauthorizedError(
+                'User not authorized',
+                StatusCode.UNAUTHORIZED
+            );
         }
 
         return Token.generate(user);
     }
 
     private async findByEmailOrUsername(data: User) {
-
-        const user: User | null = await this.repository.findByEmailOrUsername(data);
+        const user: User | null = await this.repository.findByEmailOrUsername(
+            data
+        );
 
         if (!user) {
-            throw new NotFoundError("User not found", StatusCode.NOT_FOUND);
+            throw new NotFoundError('User not found', StatusCode.NOT_FOUND);
         }
 
         return user;
-
     }
-
 }

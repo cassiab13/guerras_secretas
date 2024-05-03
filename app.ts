@@ -3,6 +3,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import config from './config';
 import routes from './routes';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocs from './swagger.json';
 
 class App {
     express: express.Application;
@@ -14,6 +16,7 @@ class App {
         this.middleware();
         this.database();
         this.routes();
+        this.swagger();
     }
 
     private middleware(): void {
@@ -23,7 +26,7 @@ class App {
     private async database() {
         try {
             await mongoose.connect(`${this.DB_URL}/${this.DB_NAME}`);
-            console.log("connect database success");
+            console.log('connect database success');
         } catch (error) {
             console.error('Cannot connect to database, error:', error);
         }
@@ -31,6 +34,14 @@ class App {
 
     private routes(): void {
         this.express.use(routes);
+    }
+
+    private swagger(): void {
+        this.express.use(
+            '/api-docs',
+            swaggerUi.serve,
+            swaggerUi.setup(swaggerDocs)
+        );
     }
 }
 

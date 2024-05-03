@@ -18,5 +18,8 @@
         "strict": true,
         "esModuleInterop": true,
         "resolveJsonModule": true
-    }
+    },
+    "files": [
+    "./swagger.json"
+  ]
 }

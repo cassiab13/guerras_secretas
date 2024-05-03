@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { User } from 'src/types/user.types';
+import { User } from '../types/user.types';
 import { UnauthorizedError } from './errors/unauthorized.error';
 import { StatusCode } from '../enums/status.code';
 
