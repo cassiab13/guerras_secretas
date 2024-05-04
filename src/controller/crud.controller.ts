@@ -17,7 +17,7 @@ export abstract class CrudController<Entity> implements ICrudController {
 
         const data: Entity = req.body;
         
-        this.crudService.create(data);
+        await this.crudService.create(data);
         res.status(StatusCode.CREATED).json();
     }
 

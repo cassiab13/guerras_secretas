@@ -7,14 +7,15 @@ import { StatusCode } from '../enums/status.code';
 
 export class CreatorService extends CrudService<Creator> {
     protected repository: CreatorRepository;
+
     constructor(repository: CreatorRepository) {
         super(repository);
         this.repository = repository;
     }
 
     public async findComicsByCreator(id: string): Promise<Comic[]> {
-        const comics: Comic[] | null =
-            await this.repository.findComicsByCreator(id);
+        const comics: Comic[] | null = await this.repository.findComicsByCreator(id);
+        
         if (!comics) {
             throw new NotFoundError('Creator not found', StatusCode.NOT_FOUND);
         }

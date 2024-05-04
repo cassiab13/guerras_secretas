@@ -7,9 +7,9 @@ export interface ICrudService<Entity> {
 
     find(id: string): Promise<Entity>;
     
-    create(data: Entity): Promise<void>; // Verificar de passar um DTO
+    create(data: Entity): Promise<void>;
 
-    update(id: string, data: Entity): Promise<void>; // Verificar de passar um DTO
+    update(id: string, data: Entity): Promise<void>;
 
     delete(id: string): Promise<void>;
 

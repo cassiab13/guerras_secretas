@@ -1,48 +1,41 @@
-import userSchema from '../../src/schema/user.schema';
+import mongoose from 'mongoose';
 
 const users = [
     {
+        _id: new mongoose.Types.ObjectId("661317e10b061b35263b93d0"),
         email: 'user1@gmail.com',
         username: 'user1',
-        password: 'abc1234',
-        isAdmin: false
+        password: '81dc9bdb52d04dc20036dbd8313ed055',
+        isAdmin: true
     },
     {
+        _id: new mongoose.Types.ObjectId("661317e10b061b35263b93d1"),
         email: 'user2@gmail.com',
         username: 'user2',
-        password: 'cba1234',
+        password: '81dc9bdb52d04dc20036dbd8313ed055',
         isAdmin: false
     },
     {
+        _id: new mongoose.Types.ObjectId("661317e10b061b35263b93d2"),
         email: 'user3@gmail.com',
         username: 'user3',
-        password: 'abc4321',
+        password: '81dc9bdb52d04dc20036dbd8313ed055',
         isAdmin: false
     },
     {
+        _id: new mongoose.Types.ObjectId("661317e10b061b35263b93d3"),
         email: 'user4@gmail.com',
         username: 'user4',
-        password: 'acb1344',
+        password: '81dc9bdb52d04dc20036dbd8313ed055',
         isAdmin: false
     },
     {
+        _id: new mongoose.Types.ObjectId("661317e10b061b35263b93d4"),
         email: 'user5@gmail.com',
         username: 'user5',
-        password: 'bbasd1234',
+        password: '81dc9bdb52d04dc20036dbd8313ed055',
         isAdmin: false
     }
 ];
+
 export { users };
-
-const getUsersIds = async () => {
-    try {
-        const users = await userSchema.find({}, '_id');
-        const userIds = users.map(user => user._id);
-        return userIds;
-    } catch (error) {
-        console.error('Erro ao recuperar IDs dos usuários:', error);
-        return [];
-    }
-};
-
-export { getUsersIds };

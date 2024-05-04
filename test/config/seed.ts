@@ -1,6 +1,7 @@
+import 'express-async-errors';
 import express from 'express';
-import config from '../../config';
 import mongoose from 'mongoose';
+import config from '../../config';
 import routes from '../../routes';
 
 export class Seed {
@@ -27,30 +28,25 @@ export class Seed {
         }
     }
 
-    public async insertDataDefault(data: any[], collectionName: string) {
-        try {
-            await mongoose.connection
-                .collection(collectionName)
-                .insertMany(data);
-        } catch (error) {
-            console.error('Error closing database connection:', error);
-        }
-    }
-
     public async deleteAllDocuments(collectionName: string): Promise<void> {
         try {
             await mongoose.connection.collection(collectionName).deleteMany({});
         } catch (error) {
-            console.error(
-                `Error deleting documents in ${collectionName}:`,
-                error
-            );
+            console.error(`Error deleting documents in ${collectionName}:`, error);
         }
     }
 
     public async dropDatabase(): Promise<void> {
         try {
             await mongoose.connection.dropDatabase();
+        } catch (error) {
+            console.error('Error closing database connection:', error);
+        }
+    }
+
+    public async insertDataDefault(data: any[], collectionName: string) {
+        try {
+            await mongoose.connection.collection(collectionName).insertMany(data);
         } catch (error) {
             console.error('Error closing database connection:', error);
         }
@@ -67,4 +63,5 @@ export class Seed {
     private routes(): void {
         this.express.use(routes);
     }
+
 }

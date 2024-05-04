@@ -20,7 +20,7 @@
     "stop": "npm run stop:docker && npm run stop:app",
     "stop:docker": "docker-compose down",
     "stop:app": "killall nodemon",
-    "test": "jest",
+    "test": "jest --detectOpenHandles --coverage",
     "cannon": "npx autocannon -c 500 -d 20 --workers 10 --renderStatusCode --latency --warmup [ -c 1 -d 2 ] http://localhost:3000/comics"
   },
   "devDependencies": {

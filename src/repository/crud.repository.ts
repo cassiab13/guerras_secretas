@@ -2,9 +2,8 @@ import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { ICrudRepository } from '../interfaces/crud.repository';
 import { Find } from '../utils/find.utils';
 
-export abstract class CrudRepository<Entity>
-    implements ICrudRepository<Entity>
-{
+export abstract class CrudRepository<Entity> implements ICrudRepository<Entity> {
+    
     protected readonly model: Model<Entity>;
 
     constructor(model: Model<Entity>) {
@@ -16,10 +15,7 @@ export abstract class CrudRepository<Entity>
     }
 
     public async update(id: string, data: Entity): Promise<void> {
-        await this.model.updateOne(
-            { _id: id } as FilterQuery<Entity>,
-            data as unknown as UpdateQuery<Entity>
-        );
+        await this.model.updateOne({ _id: id } as FilterQuery<Entity>, data as unknown as UpdateQuery<Entity>);
     }
 
     public async delete(id: string): Promise<void> {

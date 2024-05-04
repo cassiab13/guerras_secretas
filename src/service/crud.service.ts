@@ -16,17 +16,18 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
 
     public async create(data: Entity): Promise<void> {
         this.repository.create(data);
-        deleteCacheRedis();
+        await deleteCacheRedis();
     }
 
     public async update(id: string, data: Entity): Promise<void> {
         await this.findById(id);
         this.repository.update(id, data);
-        deleteCacheRedis();
+        await deleteCacheRedis();
     }
 
     public async delete(id: string): Promise<void> {
         this.repository.delete(id);
+        await deleteCacheRedis();
     }
 
     public async find(id: string): Promise<Entity> {
@@ -62,7 +63,7 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
         const value: Entity | null = await this.repository.findById(id);
 
         if (!value) {
-            throw new NotFoundError('Id not found', StatusCode.NOT_FOUND);
+            throw new NotFoundError(`${id} not found`, StatusCode.NOT_FOUND);
         }
 
         return value;
