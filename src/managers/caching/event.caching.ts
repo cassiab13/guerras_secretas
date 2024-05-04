@@ -27,6 +27,7 @@ export class EventCaching {
 
     public clear() {
         EventCaching.eventById.clear();
+        EventCaching.instance = null;
     }
     
     private async saveEvent(event: Event): Promise<Event> {

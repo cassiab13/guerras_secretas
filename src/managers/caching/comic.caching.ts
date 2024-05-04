@@ -19,6 +19,7 @@ export class ComicCaching {
 
     public clear() {
         ComicCaching.comicById.clear();
+        ComicCaching.instance = null;
     }
 
     public async findComic(comic: Comic): Promise<Comic> {

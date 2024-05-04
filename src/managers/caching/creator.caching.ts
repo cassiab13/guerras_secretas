@@ -26,6 +26,7 @@ export class CreatorCaching {
 
     public clear() {
         CreatorCaching.creatorById.clear();
+        CreatorCaching.instance = null;
     }
 
     private async saveCreator(creator: Creator): Promise<Creator> {

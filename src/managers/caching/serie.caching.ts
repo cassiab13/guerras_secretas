@@ -27,6 +27,7 @@ export class SerieCaching {
 
     public clear() {
         SerieCaching.serieById.clear();
+        SerieCaching.instance = null;
     }
     
     private async save(serie: Serie): Promise<Serie> {

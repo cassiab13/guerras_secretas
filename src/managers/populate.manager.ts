@@ -28,19 +28,19 @@ export class PopulateManager {
         events: new EventManager()
     };
 
-    public async saveSerie(serieExternal: SerieExternal, updates: any) {
+    public async saveSerie(serieExternal: SerieExternal, fieldsForUpdate: any) {
         console.time('Populate');
         const serie: Serie = await this.serieManager.save(serieExternal);
-        this.updateFieldsBySerie(serie, updates);
+        this.updateFieldsBySerie(serie, fieldsForUpdate);
         console.timeEnd('Populate');
     }
 
-    private async updateFieldsBySerie(serie: Serie, updates: any) {
+    private async updateFieldsBySerie(serie: Serie, fieldsForUpdate: any) {
 
         let populate: any = await this.getPopulate(serie.id);
         
-        const populateFieldsManagers = Object.keys(updates).map(async key => {
-            if (updates[key] && !populate[key]) {
+        const populateFieldsManagers = Object.keys(fieldsForUpdate).map(async key => {
+            if (fieldsForUpdate[key] && !populate[key]) {
                 populate[key] = true;
                 return this.strategies[key].save(serie);
             }

@@ -20,13 +20,13 @@ export class SerieManager {
     public async save(serieExternal: SerieExternal): Promise<Serie> {
 
         const serie: Serie = await this.serieAdapter.toInternal(serieExternal);
-        const newSerie: Serie = await this.updateSerie(serie);
+        const newSerie: Serie = await this.updateFieldsSerie(serie);
 
         await this.serieCaching.find(newSerie);
         return serieExternal;
     }
 
-    private async updateSerie(serie: Serie): Promise<Serie> {
+    private async updateFieldsSerie(serie: Serie): Promise<Serie> {
 
         const saveCreator: SaveCreatorHandler = new SaveCreatorHandler(serie, serie.creators as CollectionURI);
         const saveCharacter: SaveCharacterHandler = new SaveCharacterHandler(serie, serie.characters as CollectionURI);

@@ -11,16 +11,17 @@ export class PopulateService {
 
    private populateManager: PopulateManager = new PopulateManager();
 
-   public async serie(id: string, updates: any) {
+   public async serie(idSerie: string, fieldsForUpdates: any) {
 
-      const url = UrlExternalUtils.generateFind("series", id);
+      const url = UrlExternalUtils.generateFind("series", idSerie);
       const response: ResponseAPI<SerieExternal> = await Request.findByUrl(url);
 
       if (response.code === StatusCode.NOT_FOUND) {
          throw new NotFoundError("Serie not found in Marvel API", StatusCode.NOT_FOUND);
       }
 
-      this.populateManager.saveSerie(response.data.results[0], updates);
+      const serie: SerieExternal = response.data.results[0];
+      this.populateManager.saveSerie(serie, fieldsForUpdates);
    }
    
 }

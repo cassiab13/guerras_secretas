@@ -37,7 +37,7 @@ export abstract class CrudService<Entity> implements ICrudService<Entity> {
         const hashRedis: string = KeyRedis.findPage(this.getClassName(), find);
         const value: string | null | undefined = await getRedis(hashRedis);
 
-        if (value && JSON.parse(value).length !== 0) {
+        if (value) {
             return this.generateResponse(JSON.parse(value), find);
         }
 

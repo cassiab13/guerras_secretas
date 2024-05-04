@@ -11,11 +11,11 @@ export class PopulateController {
 
     public async save(request: Request, response: Response) {
 
-        const id: string = request.params.id;
+        const idSerie: string = request.params.id;
         const fields: string[] = ['comics', 'creators', 'characters', 'stories', 'events'];
-        const updates: any = this.catchFieldsForUpdate(request.query, fields);
+        const fieldsForUpdate: any = this.catchFieldsForUpdate(request.query, fields);
 
-        await this.service.serie(id, updates);
+        await this.service.serie(idSerie, fieldsForUpdate);
 
         response.status(201).json();
 
