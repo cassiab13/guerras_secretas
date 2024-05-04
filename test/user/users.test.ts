@@ -3,6 +3,7 @@ import { Seed } from '../config/seed';
 import { users } from './data.user';
 import { closeRedisConnection, deleteCacheRedis } from '../../redisConfig';
 import { StatusCode } from '../../src/enums/status.code';
+import { User } from './../../src/types/user.types';
 
 describe('Users', () => {
 
@@ -38,6 +39,42 @@ describe('Users', () => {
             expect(result.data[1].username).toEqual('user2');
             expect(result.data[3].isAdmin).toBe(false);
         });
+
+        it('should return users filter by email', async () => {
+
+            const response = await request.get('/users?email=user1@gmail.com');
+            const result = response.body;
+
+            expect(response.statusCode).toEqual(StatusCode.SUCCESS);
+            expect(result.data.length).toEqual(1);
+            expect(result.data[0].username).toEqual('user1');
+        });
+
+        it('should return users project by email and password', async () => {
+
+            const response = await request.get('/users?project=email,password');
+            const result = response.body;
+
+            expect(response.statusCode).toEqual(StatusCode.SUCCESS);
+            result.data.forEach((userData: User) => {
+                expect(Object.keys(userData)).toEqual(expect.arrayContaining(['email', 'password']));
+                expect(Object.keys(userData).length).toEqual(2);
+            });
+        });
+
+        it('should return users sort by username desc', async () => {
+
+            const response = await request.get('/users?sort=username:desc');
+            const result = response.body;
+
+            expect(response.statusCode).toEqual(StatusCode.SUCCESS);
+
+            const size: number = result.data.length - 1; 
+            for (let i = 0; i < size; i++) {
+                expect(result.data[i].username.localeCompare(result.data[i + 1].username)).toBeGreaterThanOrEqual(0);
+            }
+        });
+        
     });
 
     describe('GET /users/:id', () => {
