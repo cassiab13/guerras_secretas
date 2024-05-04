@@ -12,10 +12,8 @@ async function main() {
     app.listen(PORT, API_HOST, () => {
         console.log(`Server running at port ${PORT}`);
     });
-
-    if (!await getRedis('insertion-data-default')) {
-        new InsertDataDefault().insert();
-    }
+    
+    new InsertDataDefault().insert();
 }
 
 main();

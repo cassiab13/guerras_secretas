@@ -15,6 +15,7 @@ import { EventCaching } from "./caching/event.caching";
 import { SerieCaching } from "./caching/serie.caching";
 import { StorieCaching } from "./caching/storie.caching";
 import { deleteCacheRedis } from '../../redisConfig';
+import { SerieExternal } from '../dto/external/serie-external.dto';
 
 export class PopulateManager {
     private serieManager: SerieManager = new SerieManager();
@@ -27,34 +28,32 @@ export class PopulateManager {
         events: new EventManager()
     };
 
-    public async saveSerie(idSerie: string, updates: any) {
+    public async saveSerie(serieExternal: SerieExternal, fieldsForUpdate: any) {
         console.time('Populate');
-        const serie: Serie = await this.serieManager.save(idSerie);
-        await this.updateFieldsBySerie(idSerie, serie, updates);
+        const serie: Serie = await this.serieManager.save(serieExternal);
+        this.updateFieldsBySerie(serie, fieldsForUpdate);
         console.timeEnd('Populate');
     }
 
-    private async updateFieldsBySerie(
-        idSerie: string,
-        serie: Serie,
-        updates: any
-    ) {
-        let populate: any = await this.getPopulate(idSerie);
+    private async updateFieldsBySerie(serie: Serie, fieldsForUpdate: any) {
 
-        for (const key of Object.keys(updates)) {
-            if (updates[key] && !populate[key]) {
+        let populate: any = await this.getPopulate(serie.id);
+        
+        const populateFieldsManagers = Object.keys(fieldsForUpdate).map(async key => {
+            if (fieldsForUpdate[key] && !populate[key]) {
                 populate[key] = true;
-                this.strategies[key].save(serie);
+                return this.strategies[key].save(serie);
             }
-        }
+        });
+
+        await Promise.all(populateFieldsManagers);
+        this.clearCache();
 
         this.repository.create(populate);
     }
 
-    private async getPopulate(idSerie: string): Promise<Populate> {
-        const populate: Populate | null = await this.repository.findByIdSerie(
-            idSerie
-        );
+    private async getPopulate(idSerie: number): Promise<Populate> {
+        const populate: Populate | null = await this.repository.findByIdSerie(idSerie);
 
         if (populate) {
             return populate;

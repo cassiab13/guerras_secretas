@@ -6,6 +6,7 @@ import { NotFoundError } from '../utils/errors/not-found.error';
 import { StatusCode } from '../enums/status.code';
 import { UnauthorizedError } from '../utils/errors/unauthorized.error';
 import { Token } from '../utils/token.utils';
+import { deleteCacheRedis } from '../../redisConfig';
 
 export class UserService extends CrudService<User> {
     protected readonly repository: UserRepository;
@@ -18,6 +19,7 @@ export class UserService extends CrudService<User> {
     public async create(data: User): Promise<void> {
         data.password = await Password.generate(data.password);
         this.repository.create(data);
+        deleteCacheRedis();
     }
 
     public async auth(data: User): Promise<string> {
@@ -34,9 +36,7 @@ export class UserService extends CrudService<User> {
     }
 
     private async findByEmailOrUsername(data: User) {
-        const user: User | null = await this.repository.findByEmailOrUsername(
-            data
-        );
+        const user: User | null = await this.repository.findByEmailOrUsername(data);
 
         if (!user) {
             throw new NotFoundError('User not found', StatusCode.NOT_FOUND);

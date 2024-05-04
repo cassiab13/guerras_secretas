@@ -1,20 +1,14 @@
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node",
-  globals: {
-    "ts-jest": {
-      isolateModules: true,
-    },
-  },
-
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   clearMocks: true,
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
   coverageThreshold: {
-    global: {
-      function: 80,
-      lines: 80,
-      statements: 80,
-    },
- },
-  testPathIgnorePatterns: ["./dist/*"],
-};
+      global: {
+          function: 80,
+          lines: 80,
+          statements: 80
+      }
+  },
+  testPathIgnorePatterns: ['./dist/*']
+}

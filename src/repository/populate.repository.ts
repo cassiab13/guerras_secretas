@@ -14,7 +14,7 @@ export class PopulateRepository {
         return this.populateModel.create(populate);
     }
 
-    public async findByIdSerie(id: string): Promise<Populate | null> {
+    public async findByIdSerie(id: number): Promise<Populate | null> {
         return this.populateModel.findOne({ idSerie: id });
     }
 

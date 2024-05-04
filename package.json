@@ -15,13 +15,13 @@
   },
   "scripts": {
     "start": "npm run start:docker && npm run start:app ",
-    "start:app": "nodemon ./index.ts",
+    "start:app": "nodemon ./server.ts",
     "start:docker": "docker-compose up -d",
     "stop": "npm run stop:docker && npm run stop:app",
     "stop:docker": "docker-compose down",
     "stop:app": "killall nodemon",
-    "test": "jest",
-    "cannon": "npx autocannon -c 500 -d 20 --workers 10 --renderStatusCode --latency --debug --warmup [ -c 1 -d 2 ] http://localhost:3000/comics"
+    "test": "jest --detectOpenHandles --coverage",
+    "cannon": "npx autocannon -c 500 -d 20 --workers 10 --renderStatusCode --latency --warmup [ -c 1 -d 2 ] http://localhost:3000/comics"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

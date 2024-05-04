@@ -25,7 +25,8 @@ export class CharacterCaching {
     }
 
     public clear() {
-        CharacterCaching.characterById = new Map();
+        CharacterCaching.characterById.clear();
+        CharacterCaching.instance = null;
     }
 
     private async saveCharacter(character: Character): Promise<Character> {

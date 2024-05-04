@@ -1,4 +1,4 @@
-import { Storie } from 'src/types/storie.types';
+import { Storie } from '../../types/storie.types';
 import { StorieRepository } from '../../repository/storie.repository';
 
 export class StorieCaching {
@@ -26,7 +26,8 @@ export class StorieCaching {
     }
 
     public clear() {
-        StorieCaching.storieById = new Map();
+        StorieCaching.storieById.clear();
+        StorieCaching.instance = null;
     }
 
     private async saveStorie(storie: Storie): Promise<Storie> {
