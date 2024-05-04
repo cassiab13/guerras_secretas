@@ -10,7 +10,9 @@ const characters = [
         thumbnail: {
             path: 'https://hero1.com',
             extension: 'jpg'
-        }
+        },
+        comics: [new mongoose.Types.ObjectId('441319e10b061b35263b93d0')],
+        series: [new mongoose.Types.ObjectId('111318e10b061b35263b93d0')]
     },
     {
         _id: new mongoose.Types.ObjectId('661318e10b061b35263b93d1'),
@@ -21,7 +23,12 @@ const characters = [
         thumbnail: {
             path: 'https://hero2.com',
             extension: 'jpg'
-        }
+        },
+        comics: [
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d0'),
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d1')
+        ],
+        series: [new mongoose.Types.ObjectId('111318e10b061b35263b93d1')]
     },
     {
         _id: new mongoose.Types.ObjectId('661318e10b061b35263b93d2'),
@@ -32,7 +39,12 @@ const characters = [
         thumbnail: {
             path: 'https://hero3.com',
             extension: 'jpg'
-        }
+        },
+        comics: [
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d0'),
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d1')
+        ],
+        series: [new mongoose.Types.ObjectId('111318e10b061b35263b93d3')]
     },
     {
         _id: new mongoose.Types.ObjectId('661318e10b061b35263b93d3'),
@@ -43,7 +55,12 @@ const characters = [
         thumbnail: {
             path: 'https://hero4.com',
             extension: 'jpg'
-        }
+        },
+        comics: [
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d0'),
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d1')
+        ],
+        series: [new mongoose.Types.ObjectId('111318e10b061b35263b93d3')]
     },
     {
         _id: new mongoose.Types.ObjectId('661318e10b061b35263b93d4'),
@@ -54,7 +71,12 @@ const characters = [
         thumbnail: {
             path: 'https://hero5.com',
             extension: 'jpg'
-        }
+        },
+        comics: [
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d0'),
+            new mongoose.Types.ObjectId('441319e10b061b35263b93d1')
+        ],
+        series: [new mongoose.Types.ObjectId('111318e10b061b35263b93d3')]
     }
 ];
 
