@@ -5,6 +5,7 @@ import { Comic } from '../types/comic.types';
 import { NotFoundError } from '../utils/errors/not-found.error';
 import { StatusCode } from '../enums/status.code';
 import { Serie } from '../types/serie.types';
+import { Image } from '../types/image.types';
 
 export class CharacterService extends CrudService<Character> {
     protected repository: CharacterRepository;
@@ -37,12 +38,13 @@ export class CharacterService extends CrudService<Character> {
         return series;
     }
 
-    public async findThumbnail(id: string): Promise<Character[]> {
-        const thumbnail: Character[] | null =
-            await this.repository.findThumbnail(id);
+    public async findThumbnail(id: string): Promise<Image> {
+        const thumbnail: Image | null = await this.repository.findThumbnail(id);
+        
         if (!thumbnail) {
             throw new Error('The character does not have a Thumbnail');
         }
+
         return thumbnail;
     }
 }

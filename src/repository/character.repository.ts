@@ -3,6 +3,7 @@ import { Character } from '../types/character.types';
 import { CrudRepository } from './crud.repository';
 import { Comic } from '../types/comic.types';
 import { Serie } from '../types/serie.types';
+import { Image } from '../types/image.types';
 
 export class CharacterRepository extends CrudRepository<Character> {
     constructor(model: Model<Character>) {
@@ -29,7 +30,7 @@ export class CharacterRepository extends CrudRepository<Character> {
             .populate('series');
     }
 
-    public async findThumbnail(id: string): Promise<Character[] | null> {
+    public async findThumbnail(id: string): Promise<Image | null> {
         
         return await this.model.findById(id, {
             thumbnail: 1,

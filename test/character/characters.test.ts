@@ -38,185 +38,113 @@ describe('Characters', () => {
         });
     });
 
-    // describe('GET /characters/:id', () => {
-    //     it('should return user by id', async () => {
-    //         const userId = '661317e10b061b35263b93d0';
-    //         const response = await request.get(`/users/${userId}`);
-    //         const result = response.body;
+    describe('GET /characters/:id', () => {
+        it('should return user by id', async () => {
+            const characterId = '661318e10b061b35263b93d0';
+            const response = await request.get(`/characters/${characterId}`);
+            const result = response.body;
 
-    //         expect(response.statusCode).toEqual(StatusCode.SUCCESS);
-    //         expect(result.username).toBe('user1');
-    //         expect(result.email).toBe('user1@gmail.com');
-    //     });
+            expect(response.statusCode).toEqual(StatusCode.SUCCESS);
+            expect(result.name).toBe('Hero1');
+            expect(result.resourceURI).toBe('resource1');
+        });
 
-    //     it('should return Id not found', async () => {
-    //         const userId = '6635a53b2728112a1123c624';
-    //         const response = await request.get(`/users/${userId}`);
-    //         const result = await response.body;
+        it('should return Id not found', async () => {
+            const characterId = '661318e10b061b35263b93d6';
+            const response = await request.get(`/characters/${characterId}`);
+            const result = response.body;
 
-    //         expect(response.statusCode).toEqual(404);
-    //         expect(result.message).toBe('6635a53b2728112a1123c624 not found');
-    //     });
-    // });
+            expect(response.statusCode).toEqual(404);
+            expect(result.message).toBe('661318e10b061b35263b93d6 not found');
+        });
+        
+        it('should return thumbnail character', async () => {
+            const characterId = '661318e10b061b35263b93d0';
+            const response = await request.get(`/characters/${characterId}/thumbnail`);
+            const result = response.body;
+            console.log(result)
+            
+            expect(response.statusCode).toEqual(StatusCode.SUCCESS);
+            expect(result.thumbnail.path).toBe('https://hero1.com');
+            expect(result.thumbnail.extension).toBe('jpg');
+        });
+    });
 
-    // describe('POST /users', () => {
-    //     it('should return created user normal', async () => {
-    //         let responseUsers = await request.get('/users');
-    //         let resultUsers = responseUsers.body;
+    describe('POST /characters', () => {
+        it('should return created character', async () => {
+            let responseCharacters = await request.get('/characters');
+            let resultCharacters = responseCharacters.body;
 
-    //         expect(resultUsers.data.length).toEqual(5);
+            expect(resultCharacters.data.length).toEqual(5);
 
-    //         const token: string = await getToken('user2', '1234');
-    //         const newUser = {
-    //             email: 'jean232@gmail.com',
-    //             username: 'jean1234',
-    //             password: 'teste',
-    //             isAdmin: false
-    //         };
+            const newCharacter = {
+                id: 8,
+                name: 'Hero8',
+                description: 'description',
+                resourceURI: 'resource8',
+                thumbnail: {
+                    path: 'Testezinho :)',
+                    extension: 'jpg'
+                }
+            };
 
-    //         const response = await request
-    //             .post('/users')
-    //             .set('Authorization', `Bearer ${token}`)
-    //             .send(newUser);
+            const response = await request.post('/characters').send(newCharacter);
 
-    //         expect(response.statusCode).toEqual(StatusCode.CREATED);
+            expect(response.statusCode).toEqual(StatusCode.CREATED);
 
-    //         responseUsers = await request.get('/users');
-    //         resultUsers = responseUsers.body;
+            responseCharacters = await request.get('/characters');
+            resultCharacters = responseCharacters.body;
 
-    //         expect(responseUsers.statusCode).toEqual(StatusCode.SUCCESS);
-    //         expect(resultUsers.data.length).toEqual(6);
-    //     });
+            expect(responseCharacters.statusCode).toEqual(StatusCode.SUCCESS);
+            expect(resultCharacters.data.length).toEqual(6);
+        });
 
-    //     it('should return created user admin', async () => {
-    //         let responseUsers = await request.get('/users');
-    //         let resultUsers = responseUsers.body;
+    });
 
-    //         expect(resultUsers.data.length).toEqual(5);
+    describe('PUT /characters', () => {
+        it('should return updated character', async () => {
+            const characterId = '661318e10b061b35263b93d0';
+            let response = await request.get(`/characters/${characterId}`);
+            let result = response.body;
 
-    //         const token: string = await getToken('user1', '1234');
-    //         const newUser = {
-    //             email: 'jean232@gmail.com',
-    //             username: 'jean1234',
-    //             password: 'teste',
-    //             isAdmin: true
-    //         };
+            expect(response.statusCode).toEqual(200);
+            expect(result.name).toBe('Hero1');
 
-    //         const response = await request
-    //             .post('/users')
-    //             .set('Authorization', `Bearer ${token}`)
-    //             .send(newUser);
+            const newCharacter = {
+                name: 'Loro José',
+                description: 'O super héroi brasileiro',
+            };
 
-    //         expect(response.statusCode).toEqual(StatusCode.CREATED);
+            response = await request.put(`/characters/${characterId}`).send(newCharacter);
+            expect(response.statusCode).toEqual(StatusCode.SUCCESS);
 
-    //         responseUsers = await request.get('/users');
-    //         resultUsers = responseUsers.body;
+            response = await request.get(`/characters/${characterId}`);
+            result = response.body;
 
-    //         expect(responseUsers.statusCode).toEqual(StatusCode.SUCCESS);
-    //         expect(resultUsers.data.length).toEqual(6);
-    //     });
+            expect(response.statusCode).toEqual(StatusCode.SUCCESS);
+            expect(result.name).toBe('Loro José');
+            expect(result.description).toBe('O super héroi brasileiro');
+        });
+    });
 
-    //     it('should return token not found when create admin', async () => {
-    //         const newUser = {
-    //             email: 'jean232@gmail.com',
-    //             username: 'jean1234',
-    //             password: 'teste',
-    //             isAdmin: true
-    //         };
+    describe('DELETE /characters', () => {
+        it('should return deleted character', async () => {
+            let responseCharacters = await request.get('/characters');
+            let resultCharacters = responseCharacters.body;
 
-    //         const response = await request.post('/users').send(newUser);
-    //         const result = await response.body;
+            expect(resultCharacters.data.length).toEqual(5);
+            expect(responseCharacters.statusCode).toEqual(StatusCode.SUCCESS);
 
-    //         expect(response.statusCode).toEqual(StatusCode.UNAUTHORIZED);
-    //         expect(result.message).toBe('Token not found');
-    //     });
+            const characterId = '661318e10b061b35263b93d0';
+            let response = await request.delete(`/characters/${characterId}`);
 
-    //     it('should return only admins can create admins when create admin', async () => {
-    //         const token: string = await getToken('user2', '1234');
-    //         const newUser = {
-    //             email: 'jean232@gmail.com',
-    //             username: 'jean1234',
-    //             password: 'teste',
-    //             isAdmin: true
-    //         };
+            expect(response.statusCode).toEqual(StatusCode.NO_CONTENT);
 
-    //         const response = await request
-    //             .post('/users')
-    //             .set('Authorization', `Bearer ${token}`)
-    //             .send(newUser);
-    //         const result = await response.body;
+            responseCharacters = await request.get('/characters');
+            resultCharacters = responseCharacters.body;
 
-    //         expect(response.statusCode).toEqual(StatusCode.UNAUTHORIZED);
-    //         expect(result.message).toBe(
-    //             'Somente administradores podem criar novos administradores.'
-    //         );
-    //     });
-    // });
-
-    // describe('POST /auth', () => {
-    //     it('should return user valid', async () => {
-    //         const user = {
-    //             email: 'user1@gmail.com',
-    //             password: '1234'
-    //         };
-
-    //         const response = await request.post(`/users/auth`).send(user);
-    //         expect(response.statusCode).toEqual(StatusCode.SUCCESS);
-    //     });
-    // });
-
-    // describe('PUT /users', () => {
-    //     it('should return updated user', async () => {
-    //         const userId = '661317e10b061b35263b93d0';
-    //         let response = await request.get(`/users/${userId}`);
-    //         let result = response.body;
-
-    //         expect(response.statusCode).toEqual(200);
-    //         expect(result.username).toBe('user1');
-    //         expect(result.email).toBe('user1@gmail.com');
-
-    //         const newUser = {
-    //             username: 'user1234',
-    //             email: 'user1234@gmail.com'
-    //         };
-
-    //         response = await request.put(`/users/${userId}`).send(newUser);
-    //         expect(response.statusCode).toEqual(StatusCode.SUCCESS);
-
-    //         response = await request.get(`/users/${userId}`);
-    //         result = response.body;
-
-    //         expect(response.statusCode).toEqual(StatusCode.SUCCESS);
-    //         expect(result.username).toBe('user1234');
-    //         expect(result.email).toBe('user1234@gmail.com');
-    //     });
-    // });
-
-    // describe('DELETE /users', () => {
-    //     it('should return deleted user', async () => {
-    //         let responseUsers = await request.get('/users');
-    //         let resultUsers = responseUsers.body;
-
-    //         expect(resultUsers.data.length).toEqual(5);
-    //         expect(responseUsers.statusCode).toEqual(StatusCode.SUCCESS);
-
-    //         const userId = '661317e10b061b35263b93d4';
-    //         let response = await request.delete(`/users/${userId}`);
-
-    //         expect(response.statusCode).toEqual(StatusCode.NO_CONTENT);
-
-    //         responseUsers = await request.get('/users');
-    //         resultUsers = responseUsers.body;
-
-    //         expect(resultUsers.data.length).toEqual(4);
-    //         expect(responseUsers.statusCode).toEqual(StatusCode.SUCCESS);
-    //     });
-    // });
-
-    // async function getToken(user: string, password: string) {
-    //     const response = await request
-    //         .post(`/users/auth`)
-    //         .send({ username: user, password: password });
-    //     return response.body;
-    // }
+            expect(resultCharacters.data.length).toEqual(4);
+            expect(responseCharacters.statusCode).toEqual(StatusCode.SUCCESS);
+        });
+    });
 });
