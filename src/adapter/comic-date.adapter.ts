@@ -1,6 +1,6 @@
-import { ComicDateExternal } from "src/dto/external/comic-date-external.dto";
+import { ComicDateExternal } from "../dto/external/comic-date-external.dto";
 import { Adapter } from "./adapter";
-import { ComicDate } from "src/types/comic-date.types";
+import { ComicDate } from "../types/comic-date.types";
 
 export class ComicDateAdapter implements Adapter<ComicDateExternal, ComicDate> {
 
