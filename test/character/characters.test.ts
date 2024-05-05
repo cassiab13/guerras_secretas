@@ -1,6 +1,8 @@
 import supertest from 'supertest';
 import { Seed } from '../config/seed';
 import { characters } from './data.character';
+import { comics } from '../comic/data.comics';
+import { series } from '../serie/data.serie';
 import { closeRedisConnection, deleteCacheRedis } from '../../redisConfig';
 import { StatusCode } from '../../src/enums/status.code';
 
@@ -15,7 +17,11 @@ describe('Characters', () => {
 
     beforeEach(async () => {
         await seed.deleteAllDocuments('characters');
+        await seed.deleteAllDocuments('comics');
+        await seed.deleteAllDocuments('series');
+        await seed.insertDataDefault(comics, 'comics');
         await seed.insertDataDefault(characters, 'characters');
+        await seed.insertDataDefault(series, 'series');
         await deleteCacheRedis();
     });
 
@@ -57,15 +63,44 @@ describe('Characters', () => {
             expect(response.statusCode).toEqual(404);
             expect(result.message).toBe('661318e10b061b35263b93d6 not found');
         });
-        
+
         it('should return thumbnail character', async () => {
             const characterId = '661318e10b061b35263b93d0';
-            const response = await request.get(`/characters/${characterId}/thumbnail`);
+            const response = await request.get(
+                `/characters/${characterId}/thumbnail`
+            );
             const result = response.body;
             
             expect(response.statusCode).toEqual(StatusCode.SUCCESS);
             expect(result.thumbnail.path).toBe('https://hero1.com');
             expect(result.thumbnail.extension).toBe('jpg');
+        });
+    });
+
+    describe('GET /characters/:id/comics', () => {
+        it('should find a Comic by Character', async () => {
+            const characterId = '661318e10b061b35263b93d1';
+            const response = await request.get(
+                `/characters/${characterId}/comics`
+            );
+            const result = response.body;
+
+            expect(result.comics[0].digitalId).toBe(1);
+            expect(result.comics[0].isbn).toBe('1');
+            expect(result.comics[1].title).toBe('Comic22');
+        });
+    });
+
+    describe('GET /characters/:id/series', () => {
+        it('should find a Serie by Character', async () => {
+            const characterId = '661318e10b061b35263b93d1';
+            const response = await request.get(
+                `/characters/${characterId}/series`
+            );
+            const result = response.body;
+            expect(result.series[0].id).toBe(2);
+            expect(result.series[0].title).toBe('Serie2');
+            expect(result.series[0].startYear).toBe(2023);
         });
     });
 
@@ -87,7 +122,9 @@ describe('Characters', () => {
                 }
             };
 
-            const response = await request.post('/characters').send(newCharacter);
+            const response = await request
+                .post('/characters')
+                .send(newCharacter);
 
             expect(response.statusCode).toEqual(StatusCode.CREATED);
 
@@ -97,7 +134,6 @@ describe('Characters', () => {
             expect(responseCharacters.statusCode).toEqual(StatusCode.SUCCESS);
             expect(resultCharacters.data.length).toEqual(6);
         });
-
     });
 
     describe('PUT /characters', () => {
@@ -111,10 +147,12 @@ describe('Characters', () => {
 
             const newCharacter = {
                 name: 'Loro José',
-                description: 'O super héroi brasileiro',
+                description: 'O super héroi brasileiro'
             };
 
-            response = await request.put(`/characters/${characterId}`).send(newCharacter);
+            response = await request
+                .put(`/characters/${characterId}`)
+                .send(newCharacter);
             expect(response.statusCode).toEqual(StatusCode.SUCCESS);
 
             response = await request.get(`/characters/${characterId}`);

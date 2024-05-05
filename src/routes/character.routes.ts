@@ -5,6 +5,7 @@ import { CharacterRepository } from './../repository/character.repository';
 import { CharacterController } from './../controller/character.controller';
 import { Validate } from '../middlewares/validate';
 import { createCharacterDTO } from '../dto/create.character.dto';
+import { UpdateCharacterDto } from '../dto/update.character.dto';
 
 const characterRoutes = Router();
 
@@ -26,6 +27,7 @@ characterRoutes.get(
 );
 characterRoutes.put(
     '/:id',
+    (req, res, next) => Validate.body(req, res, next, UpdateCharacterDto),
     characterController.update.bind(characterController)
 );
 characterRoutes.delete(
