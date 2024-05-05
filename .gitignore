@@ -1,6 +1,3 @@
 node_modules/
-<<<<<<< HEAD
-coverage
-=======
 coverage/
->>>>>>> 21c60a280c4a94f24cbdf67a78b08dade8c5a661
+.env

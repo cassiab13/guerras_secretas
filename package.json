@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "npm run start:docker && npm run start:app ",
-    "start:app": "nodemon ./server.ts",
+    "start:app": "nodemon ./index.ts",
     "start:docker": "docker-compose up -d",
     "stop": "npm run stop:docker && npm run stop:app",
     "stop:docker": "docker-compose down",
