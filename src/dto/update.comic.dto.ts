@@ -1,6 +1,6 @@
 const Joi = require('joi-oid');
 
-const createComicDTO = Joi.object({
+const updateComicDTO = Joi.object({
     id: Joi.number(),
     digitalId: Joi.number().optional(),
     title: Joi.string().optional(),
@@ -28,4 +28,4 @@ const createComicDTO = Joi.object({
     events: Joi.array().items(Joi.objectId()).default([])
 });
 
-export { createComicDTO };
+export { updateComicDTO };

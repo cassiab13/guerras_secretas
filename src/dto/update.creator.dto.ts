@@ -1,6 +1,6 @@
 const Joi = require('joi-oid');
 
-const UpdateCreatorDTO = Joi.object({
+const updateCreatorDTO = Joi.object({
     firstName: Joi.string().optional(),
     middleName: Joi.string().optional(),
     lastName: Joi.string().optional(),
@@ -18,4 +18,4 @@ const UpdateCreatorDTO = Joi.object({
     series: Joi.array().items(Joi.objectId()).optional()
 });
 
-export { UpdateCreatorDTO };
+export { updateCreatorDTO };
