@@ -22,27 +22,29 @@
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "id":{
-                  "type":"string"
-                }
-              },
-              "example": {
-                "id": "2063"
-              }
-            }
-          }
+        "examples": {
+          "id": 2063
         },
+        "parameters":[
+      {
+        "name": "id",
+        "in": "path",
+        "description": "ID da série que deseja popular.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+        ],
         "responses": {
             "401": {
             "description": "Not authenticate"
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
           },
           "201": {
             "description": "Created"

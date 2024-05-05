@@ -89,6 +89,14 @@ describe('Characters', () => {
             expect(result.comics[0].isbn).toBe('1');
             expect(result.comics[1].title).toBe('Comic22');
         });
+        it('should not find a Comic by Character', async () => {
+            const characterId = '661318e10b061b35263b93d7';
+            const response = await request.get(
+                `/characters/${characterId}/comics`
+            );
+            const result = response.body;
+            expect(result.message).toBe('Character not found');
+        });
     });
 
     describe('GET /characters/:id/series', () => {
@@ -101,6 +109,15 @@ describe('Characters', () => {
             expect(result.series[0].id).toBe(2);
             expect(result.series[0].title).toBe('Serie2');
             expect(result.series[0].startYear).toBe(2023);
+        });
+
+        it('should not find a Serie by Character', async () => {
+            const characterId = '661318e10b061b35263b93d7';
+            const response = await request.get(
+                `/characters/${characterId}/series`
+            );
+            const result = response.body;
+            expect(result.message).toBe('Character not found');
         });
     });
 

@@ -5,7 +5,7 @@ import { CharacterRepository } from './../repository/character.repository';
 import { CharacterController } from './../controller/character.controller';
 import { Validate } from '../middlewares/validate';
 import { createCharacterDTO } from '../dto/create.character.dto';
-import { UpdateCharacterDto } from '../dto/update.character.dto';
+import { updateCharacterDTO } from '../dto/update.character.dto';
 
 const characterRoutes = Router();
 
@@ -20,14 +20,18 @@ const characterController: CharacterController = new CharacterController(
 );
 
 characterRoutes.get('', characterController.findAll.bind(characterController));
-characterRoutes.post('', (req, res, next) => Validate.body(req, res, next, createCharacterDTO), characterController.create.bind(characterController));
+characterRoutes.post(
+    '',
+    (req, res, next) => Validate.body(req, res, next, createCharacterDTO),
+    characterController.create.bind(characterController)
+);
 characterRoutes.get(
     '/:id',
     characterController.findById.bind(characterController)
 );
 characterRoutes.put(
     '/:id',
-    (req, res, next) => Validate.body(req, res, next, UpdateCharacterDto),
+    (req, res, next) => Validate.body(req, res, next, updateCharacterDTO),
     characterController.update.bind(characterController)
 );
 characterRoutes.delete(

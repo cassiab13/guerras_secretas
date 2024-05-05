@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const JoiId = require('joi-oid');
 
-const UpdateCharacterDto = Joi.object({
+const updateCharacterDTO = Joi.object({
     name: Joi.string().optional(),
     description: Joi.string().optional(),
     modified: Joi.date().timestamp(),
@@ -15,4 +15,4 @@ const UpdateCharacterDto = Joi.object({
     series: Joi.array().items(JoiId.objectId()).optional()
 });
 
-export { UpdateCharacterDto };
+export { updateCharacterDTO };
