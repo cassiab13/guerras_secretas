@@ -62,7 +62,6 @@ describe('Characters', () => {
             const characterId = '661318e10b061b35263b93d0';
             const response = await request.get(`/characters/${characterId}/thumbnail`);
             const result = response.body;
-            console.log(result)
             
             expect(response.statusCode).toEqual(StatusCode.SUCCESS);
             expect(result.thumbnail.path).toBe('https://hero1.com');

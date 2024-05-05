@@ -8,7 +8,7 @@ import { ComicDate } from '../types/comic-date.types';
 import { ComicPrice } from '../types/comic-price.types';
 import { ComicText } from '../types/comit-text.types';
 import { ComicTextAdapter } from './comic-text.adapter';
-import { ComicExternal } from 'src/dto/external/comic-external.dto';
+import { ComicExternal } from '../dto/external/comic-external.dto';
 
 export class ComicAdapter implements Adapter<ComicExternal, Comic> {
 

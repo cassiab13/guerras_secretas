@@ -16,6 +16,6 @@ export class SerieRepository {
 
     public async findAll(): Promise<Serie[]> {
         return this.serieModel.find();
-    } 
+    }
 
 }

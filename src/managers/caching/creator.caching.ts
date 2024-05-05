@@ -5,8 +5,7 @@ import creatorModel from '../../schema/creator.schema';
 export class CreatorCaching {
     private static instance: CreatorCaching | null = null;
     private static creatorById: Map<number, Creator> = new Map();
-    private static readonly repository: CreatorRepository =
-        new CreatorRepository(creatorModel);
+    private static readonly repository: CreatorRepository = new CreatorRepository(creatorModel);
 
     public static getInstance(): CreatorCaching {
         if (!CreatorCaching.instance) {
@@ -30,9 +29,7 @@ export class CreatorCaching {
     }
 
     private async saveCreator(creator: Creator): Promise<Creator> {
-        const newCreator: Creator = await CreatorCaching.repository.create(
-            creator
-        );
+        const newCreator: Creator = await CreatorCaching.repository.create(creator);
         CreatorCaching.creatorById.set(creator.id, newCreator);
 
         return newCreator;

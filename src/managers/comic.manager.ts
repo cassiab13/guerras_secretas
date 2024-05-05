@@ -24,6 +24,7 @@ export class ComicManager implements Manager {
 
         console.time('comic');
         const response: ResponseAPI<ComicExternal>[] = await Request.findByCollection(serie.comics as CollectionURI);
+        console.log(response);
         const allComics: ComicExternal[] = response.flatMap(response => response.data.results);
 
         const newComics: Comic[] = [];

@@ -16,18 +16,13 @@ import creatorModel from '../schema/creator.schema';
 
 export class CreatorManager implements Manager {
     private readonly creatorAdapter: CreatorAdapter = new CreatorAdapter();
-    private readonly creatorCaching: CreatorCaching =
-        CreatorCaching.getInstance();
-    private readonly creatorRepository: CreatorRepository =
-        new CreatorRepository(creatorModel);
+    private readonly creatorCaching: CreatorCaching = CreatorCaching.getInstance();
+    private readonly creatorRepository: CreatorRepository = new CreatorRepository(creatorModel);
 
     public async save(serie: Serie): Promise<void> {
         console.time('creator');
-        const response: ResponseAPI<CreatorExternal>[] =
-            await Request.findByCollection(serie.creators as CollectionURI);
-        const allCreators: CreatorExternal[] = response.flatMap(
-            response => response.data.results
-        );
+        const response: ResponseAPI<CreatorExternal>[] = await Request.findByCollection(serie.creators as CollectionURI);
+        const allCreators: CreatorExternal[] = response.flatMap(response => response.data.results);
 
         const newCreators: Creator[] = [];
         await Promise.all(

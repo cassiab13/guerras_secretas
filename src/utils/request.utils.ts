@@ -1,4 +1,4 @@
-import { ResponseAPI } from 'src/dto/external/response-api.dto';
+import { ResponseAPI } from '../dto/external/response-api.dto';
 import { CollectionURI } from '../dto/external/collection-uri.dto';
 import { UrlExternalUtils } from './url.utils';
 

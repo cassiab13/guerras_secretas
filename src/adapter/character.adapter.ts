@@ -1,7 +1,7 @@
-import { CharacterExternal } from "src/dto/external/character-external.dto";
+import { CharacterExternal } from "../dto/external/character-external.dto";
 import { Adapter } from "./adapter";
 import { ImageAdapter } from "./image.adapter";
-import { Character } from "src/types/character.types";
+import { Character } from "../types/character.types";
 
 export class CharacterAdapter implements Adapter<CharacterExternal, Character> {
 
